@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
+import { HamburgerMenu } from "@/components/ui/hamburger-menu"
 import type { User } from "@supabase/supabase-js"
 
 export function MainNav() {
@@ -49,8 +50,8 @@ export function MainNav() {
   }
 
   if (user) {
-    return (
-      <div className="flex gap-3">
+    const desktopNav = (
+      <div className="hidden md:flex gap-3">
         <Link
           href="/dashboard"
           className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
@@ -62,10 +63,35 @@ export function MainNav() {
         </Button>
       </div>
     )
+
+    const mobileNav = (
+      <HamburgerMenu>
+        <Link
+          href="/dashboard"
+          className="block px-4 py-3 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-muted"
+        >
+          Dashboard
+        </Link>
+        <Button 
+          variant="outline" 
+          onClick={handleSignOut}
+          className="w-full justify-start"
+        >
+          Sign Out
+        </Button>
+      </HamburgerMenu>
+    )
+
+    return (
+      <div className="flex items-center gap-3">
+        {desktopNav}
+        {mobileNav}
+      </div>
+    )
   }
 
-  return (
-    <div className="flex gap-3">
+  const desktopNav = (
+    <div className="hidden md:flex gap-3">
       <Link
         href="/auth/signin"
         className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
@@ -78,6 +104,30 @@ export function MainNav() {
       >
         Join as Startup
       </Link>
+    </div>
+  )
+
+  const mobileNav = (
+    <HamburgerMenu>
+      <Link
+        href="/auth/signin"
+        className="block px-4 py-3 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-muted"
+      >
+        Sign In
+      </Link>
+      <Link
+        href="/auth/signup"
+        className="block px-4 py-3 text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 rounded-md transition-colors"
+      >
+        Join as Startup
+      </Link>
+    </HamburgerMenu>
+  )
+
+  return (
+    <div className="flex items-center gap-3">
+      {desktopNav}
+      {mobileNav}
     </div>
   )
 } 

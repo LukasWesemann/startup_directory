@@ -4,6 +4,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
+import { HamburgerMenu } from "@/components/ui/hamburger-menu"
 
 export function DashboardNav() {
   const router = useRouter()
@@ -15,9 +16,70 @@ export function DashboardNav() {
     router.refresh()
   }
 
+  const desktopNav = (
+    <div className="hidden md:flex items-center space-x-4">
+      <nav className="flex space-x-4">
+        <Link 
+          href="/dashboard" 
+          className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+        >
+          Overview
+        </Link>
+        <Link 
+          href="/dashboard/profile" 
+          className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+        >
+          Profile
+        </Link>
+        <Link 
+          href="/dashboard/updates" 
+          className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+        >
+          Updates
+        </Link>
+      </nav>
+      
+      <Button variant="outline" onClick={handleSignOut}>
+        Sign Out
+      </Button>
+    </div>
+  )
+
+  const mobileNav = (
+    <HamburgerMenu>
+      <Link 
+        href="/dashboard" 
+        className="block px-4 py-3 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-muted"
+      >
+        Overview
+      </Link>
+      <Link 
+        href="/dashboard/profile" 
+        className="block px-4 py-3 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-muted"
+      >
+        Profile
+      </Link>
+      <Link 
+        href="/dashboard/updates" 
+        className="block px-4 py-3 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-muted"
+      >
+        Updates
+      </Link>
+      <div className="pt-2">
+        <Button 
+          variant="outline" 
+          onClick={handleSignOut}
+          className="w-full justify-start"
+        >
+          Sign Out
+        </Button>
+      </div>
+    </HamburgerMenu>
+  )
+
   return (
     <header>
-              <div className="container mx-auto px-4 py-6">
+      <div className="container mx-auto px-4 py-6">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3">
             <img src="/logo.png" alt="Startup Pulse Logo" className="h-12 w-auto -mt-1" />
@@ -30,30 +92,8 @@ export function DashboardNav() {
           </Link>
           
           <div className="flex items-center space-x-4">
-            <nav className="flex space-x-4">
-              <Link 
-                href="/dashboard" 
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Overview
-              </Link>
-              <Link 
-                href="/dashboard/profile" 
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Profile
-              </Link>
-              <Link 
-                href="/dashboard/updates" 
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Updates
-              </Link>
-            </nav>
-            
-            <Button variant="outline" onClick={handleSignOut}>
-              Sign Out
-            </Button>
+            {desktopNav}
+            {mobileNav}
           </div>
         </div>
       </div>
