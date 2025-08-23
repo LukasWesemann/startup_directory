@@ -9,8 +9,10 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { FileUpload } from "@/components/ui/file-upload"
 import { profileSchema, stageOptions, type ProfileFormData } from "@/lib/validations"
 import { Startup } from "@/lib/types/database"
+import { uploadFile, deleteFile } from "@/lib/utils/upload"
 import { X } from "lucide-react"
 
 interface ProfileFormProps {
@@ -21,19 +23,65 @@ export function ProfileForm({ startup }: ProfileFormProps) {
   const [formData, setFormData] = useState<ProfileFormData>({
     name: startup.name,
     slug: startup.slug,
+    logo_url: startup.logo_url || "",
     tagline: startup.tagline || "",
     description_md: startup.description_md || "",
     website_url: startup.website_url || "",
     location: startup.location || "",
     sectors: startup.sectors || [],
     stage: startup.stage,
+    email: startup.email || "",
+    twitter_url: startup.twitter_url || "",
+    linkedin_url: startup.linkedin_url || "",
   })
   const [newSector, setNewSector] = useState("")
   const [loading, setLoading] = useState(false)
+  const [uploadingLogo, setUploadingLogo] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const router = useRouter()
   const supabase = createClient()
+
+  const handleLogoUpload = async (file: File) => {
+    setUploadingLogo(true)
+    setError(null)
+    
+    try {
+      const logoUrl = await uploadFile(file)
+      setFormData(prev => ({ ...prev, logo_url: logoUrl }))
+      
+      // Auto-save the profile with the new logo
+      const updatedFormData = { ...formData, logo_url: logoUrl }
+      const validatedData = profileSchema.parse(updatedFormData)
+      
+      const { error } = await supabase
+        .from('startups')
+        .update(validatedData)
+        .eq('id', startup.id)
+
+      if (error) {
+        setError(error.message || 'Failed to save logo')
+      } else {
+        setSuccess(true)
+        router.refresh()
+      }
+    } catch (err: any) {
+      setError(err.message || 'Failed to upload logo')
+    } finally {
+      setUploadingLogo(false)
+    }
+  }
+
+  const handleLogoRemove = async () => {
+    if (formData.logo_url && formData.logo_url !== startup.logo_url) {
+      try {
+        await deleteFile(formData.logo_url)
+      } catch (err) {
+        console.error('Failed to delete old logo:', err)
+      }
+    }
+    setFormData(prev => ({ ...prev, logo_url: "" }))
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -50,16 +98,18 @@ export function ProfileForm({ startup }: ProfileFormProps) {
         .eq('id', startup.id)
 
       if (error) {
-        setError(error.message)
+        setError(error.message || 'Failed to update profile')
       } else {
         setSuccess(true)
         router.refresh()
       }
     } catch (err: any) {
-      if (err.errors) {
+      if (err.errors && err.errors.length > 0) {
         setError(err.errors[0].message)
+      } else if (err.message) {
+        setError(err.message)
       } else {
-        setError("An unexpected error occurred")
+        setError("An unexpected error occurred. Please check your input and try again.")
       }
     } finally {
       setLoading(false)
@@ -101,6 +151,15 @@ export function ProfileForm({ startup }: ProfileFormProps) {
               Profile updated successfully!
             </div>
           )}
+
+          <FileUpload
+            value={formData.logo_url}
+            onChange={(url) => setFormData(prev => ({ ...prev, logo_url: url || "" }))}
+            onFileSelect={handleLogoUpload}
+            disabled={loading || uploadingLogo}
+            label="Startup Logo"
+            maxSize={5}
+          />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
@@ -178,6 +237,44 @@ export function ProfileForm({ startup }: ProfileFormProps) {
                 placeholder="San Francisco, CA"
               />
             </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <Label htmlFor="email">Contact Email</Label>
+              <Input
+                id="email"
+                type="email"
+                value={formData.email}
+                onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                disabled={loading}
+                placeholder="hello@yourstartup.com"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="twitter">X (Twitter) URL</Label>
+              <Input
+                id="twitter"
+                type="url"
+                value={formData.twitter_url}
+                onChange={(e) => setFormData(prev => ({ ...prev, twitter_url: e.target.value }))}
+                disabled={loading}
+                placeholder="https://x.com/yourstartup"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="linkedin">LinkedIn URL</Label>
+            <Input
+              id="linkedin"
+              type="url"
+              value={formData.linkedin_url}
+              onChange={(e) => setFormData(prev => ({ ...prev, linkedin_url: e.target.value }))}
+              disabled={loading}
+              placeholder="https://linkedin.com/company/yourstartup"
+            />
           </div>
 
           <div className="space-y-2">

@@ -14,6 +14,7 @@ export const profileSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters').max(60, 'Name must be less than 60 characters'),
   slug: z.string().min(2, 'Slug must be at least 2 characters').max(60, 'Slug must be less than 60 characters')
     .regex(/^[a-z0-9-]+$/, 'Slug can only contain lowercase letters, numbers, and hyphens'),
+  logo_url: z.string().optional().or(z.literal('')),
   tagline: z.string().max(120, 'Tagline must be less than 120 characters').optional().or(z.literal('')),
   description_md: z.string().max(2000, 'Description must be less than 2000 characters').optional().or(z.literal('')),
   website_url: z.string().url('Must be a valid URL').optional().or(z.literal('')),
@@ -21,6 +22,9 @@ export const profileSchema = z.object({
   sectors: z.array(z.string()).max(10, 'Maximum 10 sectors allowed').optional(),
   stage: z.enum(stageOptions).default('idea'),
   is_public: z.boolean().optional(),
+  email: z.string().email('Must be a valid email address').optional().or(z.literal('')),
+  twitter_url: z.string().url('Must be a valid URL').optional().or(z.literal('')),
+  linkedin_url: z.string().url('Must be a valid URL').optional().or(z.literal('')),
 })
 
 export const updateSchema = z.object({

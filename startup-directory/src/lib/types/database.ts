@@ -14,6 +14,9 @@ export type Database = {
           sectors: string[] | null
           stage: 'idea' | 'pre-seed' | 'seed' | 'series-a' | 'series-b' | 'growth' | 'public'
           is_public: boolean
+          email: string | null
+          twitter_url: string | null
+          linkedin_url: string | null
           created_at: string
           updated_at: string
         }
@@ -29,6 +32,9 @@ export type Database = {
           sectors?: string[] | null
           stage?: 'idea' | 'pre-seed' | 'seed' | 'series-a' | 'series-b' | 'growth' | 'public'
           is_public?: boolean
+          email?: string | null
+          twitter_url?: string | null
+          linkedin_url?: string | null
           created_at?: string
           updated_at?: string
         }
@@ -44,6 +50,9 @@ export type Database = {
           sectors?: string[] | null
           stage?: 'idea' | 'pre-seed' | 'seed' | 'series-a' | 'series-b' | 'growth' | 'public'
           is_public?: boolean
+          email?: string | null
+          twitter_url?: string | null
+          linkedin_url?: string | null
           created_at?: string
           updated_at?: string
         }
