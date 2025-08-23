@@ -31,7 +31,7 @@ export function UpdateModal({ update, onClose }: UpdateModalProps) {
         }}
       >
         <DialogHeader className="flex-shrink-0">
-          <div className="flex items-center justify-between">
+          <div className="flex items-start justify-between">
             <Link 
               href={`/s/${startup.slug}`}
               className="flex items-center space-x-3 hover:opacity-80 transition-opacity"
@@ -42,31 +42,51 @@ export function UpdateModal({ update, onClose }: UpdateModalProps) {
                   {startup.name.substring(0, 2).toUpperCase()}
                 </AvatarFallback>
               </Avatar>
-              <div className="flex items-start space-x-3">
-                <div>
-                  <h3 className="font-bold text-lg text-foreground">{startup.name}</h3>
-                  <p className="text-sm text-muted-foreground">{startup.tagline}</p>
-                </div>
-                <Badge 
-                  className="text-white"
-                  style={{ backgroundColor: '#0F8A8A' }}
-                >
-                  {startup.stage.replace('-', ' ')}
-                </Badge>
+              <div>
+                <h3 className="font-bold text-lg text-foreground">{startup.name}</h3>
+                <p className="text-sm text-muted-foreground">{startup.tagline}</p>
               </div>
             </Link>
           </div>
           
+          {/* Tags positioned at bottom of profile section */}
+          <div className="flex items-center space-x-2 mt-2">
+            <Badge 
+              className="text-xs rounded-[4px] text-white"
+              style={{ backgroundColor: '#0F8A8A' }}
+            >
+              {startup.stage.replace('-', ' ')}
+            </Badge>
+            {startup.sectors && startup.sectors.length > 0 && (
+              <Badge 
+                className="text-xs rounded-[4px] text-gray-800"
+                style={{ 
+                  backgroundColor: '#F5F5DC',
+                  border: '1px solid #E5E5D0'
+                }}
+              >
+                {startup.sectors[0]}
+              </Badge>
+            )}
+          </div>
+          
           {update.title && (
-            <DialogTitle className="text-xl font-semibold mt-4">
+            <DialogTitle className="text-xl font-semibold mt-3">
               {update.title}
             </DialogTitle>
           )}
         </DialogHeader>
 
         <div className="mt-6 space-y-8 overflow-y-auto flex-1 pr-2 custom-scrollbar">
-          <div className="prose prose-base dark:prose-invert max-w-none break-words leading-relaxed">
-            <ReactMarkdown>{update.content_md}</ReactMarkdown>
+          <div className="prose prose-base dark:prose-invert max-w-none break-words leading-relaxed whitespace-pre-wrap">
+            <ReactMarkdown 
+              components={{
+                p: ({ children }) => <p className="mb-4">{children}</p>,
+                br: () => <br />,
+              }}
+            >
+              {update.content_md}
+            </ReactMarkdown>
           </div>
 
           {update.images.length > 0 && (
@@ -99,7 +119,15 @@ export function UpdateModal({ update, onClose }: UpdateModalProps) {
                 Published on {publishedDate}
               </p>
               <Link href={`/s/${startup.slug}`}>
-                <Button variant="outline" size="sm">
+                <Button 
+                  size="sm"
+                  style={{
+                    backgroundColor: '#0F8A8A',
+                    borderColor: '#0F8A8A',
+                    color: 'white'
+                  }}
+                  className="hover:bg-teal-700 hover:border-teal-700"
+                >
                   View Profile Page
                 </Button>
               </Link>

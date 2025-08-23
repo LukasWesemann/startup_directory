@@ -41,12 +41,15 @@ export function SignInForm() {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Sign In</CardTitle>
-      </CardHeader>
+    <Card 
+      style={{
+        backgroundColor: 'transparent',
+        boxShadow: '0 10px 25px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2)',
+        border: '1px solid #404040'
+      }}
+    >
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-6">
           {error && (
             <div className="p-3 text-sm text-red-500 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-md">
               {error}
@@ -54,7 +57,7 @@ export function SignInForm() {
           )}
           
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email" className="block">Email</Label>
             <Input
               id="email"
               type="email"
@@ -66,7 +69,7 @@ export function SignInForm() {
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password" className="block">Password</Label>
             <Input
               id="password"
               type="password"
@@ -77,9 +80,20 @@ export function SignInForm() {
             />
           </div>
           
-          <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? "Signing in..." : "Sign In"}
-          </Button>
+          <div className="flex justify-center pt-8">
+            <Button 
+              type="submit" 
+              disabled={loading}
+              style={{
+                backgroundColor: '#0F8A8A',
+                borderColor: '#0F8A8A',
+                color: 'white'
+              }}
+              className="hover:bg-teal-700 hover:border-teal-700"
+            >
+              {loading ? "Signing in..." : "Sign In"}
+            </Button>
+          </div>
         </form>
       </CardContent>
     </Card>

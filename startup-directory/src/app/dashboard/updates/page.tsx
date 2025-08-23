@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { UpdateFormModal } from "@/components/dashboard/update-form-modal"
 import { formatDateShort } from "@/lib/utils"
+import { Pen } from "lucide-react"
 
 async function getUpdates() {
   const supabase = await createClient()
@@ -107,9 +108,10 @@ export default async function UpdatesPage() {
                     </div>
                   </div>
                   <UpdateFormModal updateId={update.id} update={update}>
-                    <Button variant="outline" size="sm">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer transition-colors">
+                      <Pen className="h-4 w-4" />
                       Edit
-                    </Button>
+                    </div>
                   </UpdateFormModal>
                 </div>
               </CardHeader>

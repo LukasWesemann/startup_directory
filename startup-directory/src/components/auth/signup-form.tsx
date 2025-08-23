@@ -48,12 +48,18 @@ export function SignUpForm() {
 
   if (success) {
     return (
-      <Card>
+      <Card 
+        style={{
+          backgroundColor: 'transparent',
+          boxShadow: '0 10px 25px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2)',
+          border: '1px solid #404040'
+        }}
+      >
         <CardHeader>
           <CardTitle>Check Your Email</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
+          <div className="space-y-6">
             <div className="p-4 text-sm text-green-700 bg-green-50 dark:bg-green-950/20 dark:text-green-400 border border-green-200 dark:border-green-800 rounded-md">
               <p className="font-medium">Account created successfully!</p>
               <p className="mt-2">
@@ -66,12 +72,19 @@ export function SignUpForm() {
               <p>Didn't receive the email? Check your spam folder or contact support.</p>
             </div>
             
-            <Button 
-              onClick={() => router.push("/auth/signin")} 
-              className="w-full"
-            >
-              Go to Sign In
-            </Button>
+            <div className="flex justify-center pt-8">
+              <Button 
+                onClick={() => router.push("/auth/signin")}
+                style={{
+                  backgroundColor: '#0F8A8A',
+                  borderColor: '#0F8A8A',
+                  color: 'white'
+                }}
+                className="hover:bg-teal-700 hover:border-teal-700"
+              >
+                Go to Sign In
+              </Button>
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -79,12 +92,15 @@ export function SignUpForm() {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Create Account</CardTitle>
-      </CardHeader>
+    <Card 
+      style={{
+        backgroundColor: 'transparent',
+        boxShadow: '0 10px 25px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2)',
+        border: '1px solid #404040'
+      }}
+    >
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-6">
           {error && (
             <div className="p-3 text-sm text-red-500 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-md">
               {error}
@@ -92,7 +108,7 @@ export function SignUpForm() {
           )}
           
           <div className="space-y-2">
-            <Label htmlFor="name">Startup Name</Label>
+            <Label htmlFor="name" className="mt-4 block">Startup Name</Label>
             <Input
               id="name"
               type="text"
@@ -105,7 +121,7 @@ export function SignUpForm() {
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email" className="mt-4 block">Email</Label>
             <Input
               id="email"
               type="email"
@@ -118,7 +134,7 @@ export function SignUpForm() {
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password" className="mt-4 block">Password</Label>
             <Input
               id="password"
               type="password"
@@ -131,9 +147,20 @@ export function SignUpForm() {
             />
           </div>
           
-          <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? "Creating account..." : "Create Account"}
-          </Button>
+          <div className="flex justify-center pt-8">
+            <Button 
+              type="submit" 
+              disabled={loading}
+              style={{
+                backgroundColor: '#0F8A8A',
+                borderColor: '#0F8A8A',
+                color: 'white'
+              }}
+              className="hover:bg-teal-700 hover:border-teal-700"
+            >
+              {loading ? "Creating account..." : "Create Account"}
+            </Button>
+          </div>
         </form>
       </CardContent>
     </Card>
