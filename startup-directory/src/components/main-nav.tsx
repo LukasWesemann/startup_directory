@@ -51,13 +51,28 @@ export function MainNav() {
 
   if (user) {
     const desktopNav = (
-      <div className="hidden md:flex gap-3">
-        <Link
-          href="/dashboard"
-          className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-        >
-          Dashboard
-        </Link>
+      <div className="hidden md:flex items-center space-x-4">
+        <nav className="flex space-x-4">
+          <Link 
+            href="/dashboard" 
+            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Overview
+          </Link>
+          <Link 
+            href="/dashboard/profile" 
+            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Profile
+          </Link>
+          <Link 
+            href="/dashboard/updates" 
+            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Updates
+          </Link>
+        </nav>
+        
         <Button variant="outline" onClick={handleSignOut}>
           Sign Out
         </Button>
@@ -66,19 +81,33 @@ export function MainNav() {
 
     const mobileNav = (
       <HamburgerMenu>
-        <Link
-          href="/dashboard"
+        <Link 
+          href="/dashboard" 
           className="block px-4 py-3 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-muted"
         >
-          Dashboard
+          Overview
         </Link>
-        <Button 
-          variant="outline" 
-          onClick={handleSignOut}
-          className="w-full justify-start"
+        <Link 
+          href="/dashboard/profile" 
+          className="block px-4 py-3 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-muted"
         >
-          Sign Out
-        </Button>
+          Profile
+        </Link>
+        <Link 
+          href="/dashboard/updates" 
+          className="block px-4 py-3 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-muted"
+        >
+          Updates
+        </Link>
+        <div className="pt-2">
+          <Button 
+            variant="outline" 
+            onClick={handleSignOut}
+            className="w-full justify-start"
+          >
+            Sign Out
+          </Button>
+        </div>
       </HamburgerMenu>
     )
 
