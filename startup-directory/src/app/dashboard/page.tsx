@@ -47,7 +47,7 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 pt-4">
       <div>
         <h1 className="text-3xl font-bold text-foreground">
           Welcome back, {startup.name}!
@@ -60,8 +60,9 @@ export default async function DashboardPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <Card 
           style={{
-            backgroundColor: 'rgba(40, 40, 40, 0.9)',
-            backdropFilter: 'blur(12px)'
+            backgroundColor: 'transparent',
+            boxShadow: '0 10px 25px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2)',
+            border: '1px solid #404040'
           }}
         >
           <CardHeader>
@@ -89,8 +90,9 @@ export default async function DashboardPage() {
 
         <Card 
           style={{
-            backgroundColor: 'rgba(40, 40, 40, 0.9)',
-            backdropFilter: 'blur(12px)'
+            backgroundColor: 'transparent',
+            boxShadow: '0 10px 25px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2)',
+            border: '1px solid #404040'
           }}
         >
           <CardHeader>
@@ -115,8 +117,9 @@ export default async function DashboardPage() {
 
         <Card 
           style={{
-            backgroundColor: 'rgba(40, 40, 40, 0.9)',
-            backdropFilter: 'blur(12px)'
+            backgroundColor: 'transparent',
+            boxShadow: '0 10px 25px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2)',
+            border: '1px solid #404040'
           }}
         >
           <CardHeader>
@@ -140,8 +143,9 @@ export default async function DashboardPage() {
       {updates.length > 0 && (
         <Card 
           style={{
-            backgroundColor: 'rgba(40, 40, 40, 0.9)',
-            backdropFilter: 'blur(12px)'
+            backgroundColor: 'transparent',
+            boxShadow: '0 10px 25px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2)',
+            border: '1px solid #404040'
           }}
         >
           <CardHeader>
@@ -150,7 +154,7 @@ export default async function DashboardPage() {
           <CardContent>
             <div className="space-y-4">
               {updates.map((update) => (
-                <div key={update.id} className="border-l-2 border-primary pl-4">
+                <div key={update.id} className="border-l-2 pl-4" style={{ borderLeftColor: '#0F8A8A' }}>
                   {update.title && (
                     <h4 className="font-medium text-foreground">{update.title}</h4>
                   )}

@@ -27,7 +27,7 @@ export function ProfileForm({ startup }: ProfileFormProps) {
     tagline: startup.tagline || "",
     description_md: startup.description_md || "",
     website_url: startup.website_url || "",
-    location: startup.location || "",
+    location: startup.location || "Melbourne, Australia",
     sectors: startup.sectors || [],
     stage: startup.stage,
     email: startup.email || "",
@@ -137,8 +137,9 @@ export function ProfileForm({ startup }: ProfileFormProps) {
     <div className="max-w-4xl mx-auto">
       <Card 
         style={{
-          backgroundColor: 'rgba(40, 40, 40, 0.9)',
-          backdropFilter: 'blur(12px)'
+          backgroundColor: 'transparent',
+          boxShadow: '0 10px 25px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2)',
+          border: '1px solid #404040'
         }}
       >
         <CardHeader>
@@ -171,7 +172,7 @@ export function ProfileForm({ startup }: ProfileFormProps) {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <Label htmlFor="name">Startup Name</Label>
+                <Label htmlFor="name" className="mt-4 block">Startup Name</Label>
                 <Input
                   id="name"
                   value={formData.name}
@@ -182,7 +183,7 @@ export function ProfileForm({ startup }: ProfileFormProps) {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="slug">URL Slug</Label>
+                <Label htmlFor="slug" className="mt-4 block">URL Slug</Label>
                 <Input
                   id="slug"
                   value={formData.slug}
@@ -197,9 +198,9 @@ export function ProfileForm({ startup }: ProfileFormProps) {
               </div>
             </div>
 
-            <div className="max-w-2xl">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <Label htmlFor="tagline">Tagline</Label>
+                <Label htmlFor="tagline" className="mt-4 block">Tagline</Label>
                 <Input
                   id="tagline"
                   value={formData.tagline}
@@ -209,26 +210,53 @@ export function ProfileForm({ startup }: ProfileFormProps) {
                   maxLength={120}
                 />
               </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="stage" className="mt-4 block">Stage</Label>
+                <div className="relative">
+                  <select
+                    id="stage"
+                    value={formData.stage}
+                    onChange={(e) => setFormData(prev => ({ ...prev, stage: e.target.value as any }))}
+                    disabled={loading}
+                    className="w-full px-3 py-2 border border-input bg-background rounded-md text-sm appearance-none pr-8"
+                    style={{
+                      backgroundColor: 'rgba(40, 40, 40, 0.9)',
+                      border: '1px solid #404040',
+                      color: 'white'
+                    }}
+                  >
+                    {stageOptions.map((stage) => (
+                      <option key={stage} value={stage} style={{ backgroundColor: 'rgba(40, 40, 40, 0.9)', color: 'white' }}>
+                        {stage.replace('-', ' ')}
+                      </option>
+                    ))}
+                  </select>
+                  <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                    <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div className="max-w-3xl">
-              <div className="space-y-2">
-                <Label htmlFor="description">Description</Label>
-                <Textarea
-                  id="description"
-                  value={formData.description_md}
-                  onChange={(e) => setFormData(prev => ({ ...prev, description_md: e.target.value }))}
-                  disabled={loading}
-                  placeholder="Tell people about your startup..."
-                  rows={4}
-                  maxLength={2000}
-                />
-              </div>
+            <div className="space-y-2">
+              <Label htmlFor="description" className="mt-4 block">About</Label>
+              <Textarea
+                id="description"
+                value={formData.description_md}
+                onChange={(e) => setFormData(prev => ({ ...prev, description_md: e.target.value }))}
+                disabled={loading}
+                placeholder="Tell people about your startup..."
+                rows={4}
+                maxLength={2000}
+              />
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <Label htmlFor="website">Website URL</Label>
+                <Label htmlFor="website" className="mt-4 block">Website URL</Label>
                 <Input
                   id="website"
                   type="url"
@@ -240,20 +268,20 @@ export function ProfileForm({ startup }: ProfileFormProps) {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="location">Location</Label>
+                <Label htmlFor="location" className="mt-4 block">Location</Label>
                 <Input
                   id="location"
                   value={formData.location}
                   onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))}
                   disabled={loading}
-                  placeholder="San Francisco, CA"
+                  placeholder="Melbourne, Australia"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <Label htmlFor="email">Contact Email</Label>
+                <Label htmlFor="email" className="mt-4 block">Contact Email</Label>
                 <Input
                   id="email"
                   type="email"
@@ -265,7 +293,7 @@ export function ProfileForm({ startup }: ProfileFormProps) {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="twitter">X (Twitter) URL</Label>
+                <Label htmlFor="twitter" className="mt-4 block">X (Twitter) URL</Label>
                 <Input
                   id="twitter"
                   type="url"
@@ -277,9 +305,9 @@ export function ProfileForm({ startup }: ProfileFormProps) {
               </div>
             </div>
 
-            <div className="max-w-2xl">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <Label htmlFor="linkedin">LinkedIn URL</Label>
+                <Label htmlFor="linkedin" className="mt-4 block">LinkedIn URL</Label>
                 <Input
                   id="linkedin"
                   type="url"
@@ -289,30 +317,9 @@ export function ProfileForm({ startup }: ProfileFormProps) {
                   placeholder="https://linkedin.com/company/yourstartup"
                 />
               </div>
-            </div>
 
-            <div className="max-w-md">
               <div className="space-y-2">
-                <Label htmlFor="stage">Stage</Label>
-                <select
-                  id="stage"
-                  value={formData.stage}
-                  onChange={(e) => setFormData(prev => ({ ...prev, stage: e.target.value as any }))}
-                  disabled={loading}
-                  className="w-full px-3 py-2 border border-input bg-background rounded-md text-sm"
-                >
-                  {stageOptions.map((stage) => (
-                    <option key={stage} value={stage}>
-                      {stage.replace('-', ' ')}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            <div className="max-w-2xl">
-              <div className="space-y-2">
-                <Label>Sectors</Label>
+                <Label className="mt-4 block">Sectors</Label>
                 <div className="flex gap-2">
                   <Input
                     value={newSector}
@@ -348,8 +355,18 @@ export function ProfileForm({ startup }: ProfileFormProps) {
               </div>
             </div>
 
-            <div className="max-w-md">
-              <Button type="submit" disabled={loading} className="w-full">
+            <div className="flex justify-center pt-8">
+              <Button 
+                type="submit" 
+                disabled={loading} 
+                size="sm"
+                style={{
+                  backgroundColor: '#0F8A8A',
+                  borderColor: '#0F8A8A',
+                  color: 'white'
+                }}
+                className="hover:bg-teal-700 hover:border-teal-700"
+              >
                 {loading ? "Saving..." : "Save Profile"}
               </Button>
             </div>

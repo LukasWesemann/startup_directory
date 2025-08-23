@@ -23,14 +23,14 @@ export function UpdateModal({ update, onClose }: UpdateModalProps) {
   return (
     <Dialog open={!!update} onOpenChange={() => onClose()}>
       <DialogContent 
-        className="!w-[48vw] !max-w-[48vw] !sm:max-w-[48vw] max-h-[90vh] overflow-y-auto"
+        className="!w-[90vw] !max-w-[90vw] sm:!w-[48vw] sm:!max-w-[48vw] max-h-[90vh] flex flex-col"
         style={{
           backgroundColor: '#0f0f0f',
           boxShadow: '0 10px 25px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2)',
           border: '1px solid #404040'
         }}
       >
-        <DialogHeader>
+        <DialogHeader className="flex-shrink-0">
           <div className="flex items-center justify-between">
             <Link 
               href={`/s/${startup.slug}`}
@@ -64,7 +64,7 @@ export function UpdateModal({ update, onClose }: UpdateModalProps) {
           )}
         </DialogHeader>
 
-        <div className="mt-6 space-y-8">
+        <div className="mt-6 space-y-8 overflow-y-auto flex-1 pr-2 custom-scrollbar">
           <div className="prose prose-base dark:prose-invert max-w-none break-words leading-relaxed">
             <ReactMarkdown>{update.content_md}</ReactMarkdown>
           </div>

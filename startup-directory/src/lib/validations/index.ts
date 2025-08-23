@@ -31,7 +31,7 @@ export const updateSchema = z.object({
   title: z.string().max(80, 'Title must be less than 80 characters').optional().or(z.literal('')),
   content_md: z.string()
     .min(50, 'Content must be at least 50 characters')
-    .max(800, 'Content must be less than 800 characters'),
+    .max(2000, 'Content must be less than 2000 characters'),
   is_published: z.boolean().default(true),
 })
 

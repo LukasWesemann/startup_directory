@@ -54,8 +54,9 @@ export default async function UpdatesPage() {
       {updates.length === 0 ? (
         <Card 
           style={{
-            backgroundColor: 'rgba(40, 40, 40, 0.9)',
-            backdropFilter: 'blur(12px)'
+            backgroundColor: 'transparent',
+            boxShadow: '0 10px 25px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2)',
+            border: '1px solid #404040'
           }}
         >
           <CardContent className="text-center py-12">
@@ -80,8 +81,9 @@ export default async function UpdatesPage() {
             <Card 
               key={update.id}
               style={{
-                backgroundColor: 'rgba(40, 40, 40, 0.9)',
-                backdropFilter: 'blur(12px)'
+                backgroundColor: 'transparent',
+                boxShadow: '0 10px 25px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2)',
+                border: '1px solid #404040'
               }}
             >
               <CardHeader>

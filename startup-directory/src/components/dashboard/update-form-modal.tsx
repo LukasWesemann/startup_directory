@@ -142,10 +142,10 @@ export function UpdateFormModal({ children, update, updateId }: UpdateFormModalP
               rows={8}
               required
               minLength={50}
-              maxLength={800}
+              maxLength={2000}
             />
             <p className="text-xs text-muted-foreground">
-              {formData.content_md.length}/800 characters (minimum 50)
+              {formData.content_md.length}/2000 characters (minimum 50)
             </p>
           </div>
 
