@@ -1,6 +1,7 @@
 import { UpdatesFeed } from "@/components/updates-feed"
 import { MainNav } from "@/components/main-nav"
 import { SponsorSection } from "@/components/sponsor-section"
+import { EmailVerificationHandler } from "@/components/email-verification-handler"
 import { createClient } from "@/lib/supabase/server"
 import { UpdateWithStartup } from "@/lib/types/database"
 
@@ -41,6 +42,7 @@ export default async function HomePage() {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#0f0f0f' }}>
+      <EmailVerificationHandler />
       <header>
           <div className="container mx-auto px-4 py-6">
             <div className="flex items-center justify-between">
