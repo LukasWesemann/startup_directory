@@ -149,17 +149,7 @@ export function UpdateFormModal({ children, update, updateId }: UpdateFormModalP
             </p>
           </div>
 
-          <div className="flex items-center space-x-2">
-            <input
-              type="checkbox"
-              id="is_published"
-              checked={formData.is_published}
-              onChange={(e) => setFormData(prev => ({ ...prev, is_published: e.target.checked }))}
-              disabled={loading}
-              className="rounded border-gray-300"
-            />
-            <Label htmlFor="is_published">Publish immediately</Label>
-          </div>
+
 
           <div className="flex justify-end space-x-2">
             <Button type="button" variant="outline" onClick={() => setOpen(false)} disabled={loading}>

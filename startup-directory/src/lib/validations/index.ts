@@ -20,7 +20,7 @@ export const profileSchema = z.object({
   location: z.string().max(100, 'Location must be less than 100 characters').optional().or(z.literal('')),
   sectors: z.array(z.string()).max(10, 'Maximum 10 sectors allowed').optional(),
   stage: z.enum(stageOptions).default('idea'),
-  is_public: z.boolean().default(true),
+  is_public: z.boolean().optional(),
 })
 
 export const updateSchema = z.object({

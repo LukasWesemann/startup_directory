@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Globe, MapPin, ExternalLink } from "lucide-react"
 import Link from "next/link"
+import { formatDate } from "@/lib/utils"
 
 async function getStartupBySlug(slug: string) {
   const supabase = await createClient()
@@ -164,11 +165,7 @@ export default async function StartupProfilePage({
                           <CardTitle className="text-xl">{update.title}</CardTitle>
                         )}
                         <p className="text-sm text-muted-foreground">
-                          {new Date(update.published_at).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
-                          })}
+                          {formatDate(update.published_at)}
                         </p>
                       </div>
                     </CardHeader>

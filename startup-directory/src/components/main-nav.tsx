@@ -1,0 +1,83 @@
+"use client"
+
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+import { createClient } from "@/lib/supabase/client"
+import { Button } from "@/components/ui/button"
+import type { User } from "@supabase/supabase-js"
+
+export function MainNav() {
+  const router = useRouter()
+  const supabase = createClient()
+  const [user, setUser] = useState<User | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      setUser(user)
+      setLoading(false)
+    }
+
+    getUser()
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        setUser(session?.user ?? null)
+        setLoading(false)
+      }
+    )
+
+    return () => subscription.unsubscribe()
+  }, [supabase.auth])
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut()
+    router.push("/")
+    router.refresh()
+  }
+
+  if (loading) {
+    return (
+      <div className="flex gap-3">
+        <div className="px-4 py-2 text-sm font-medium text-muted-foreground">
+          Loading...
+        </div>
+      </div>
+    )
+  }
+
+  if (user) {
+    return (
+      <div className="flex gap-3">
+        <Link
+          href="/dashboard"
+          className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+        >
+          Dashboard
+        </Link>
+        <Button variant="outline" onClick={handleSignOut}>
+          Sign Out
+        </Button>
+      </div>
+    )
+  }
+
+  return (
+    <div className="flex gap-3">
+      <Link
+        href="/auth/signin"
+        className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+      >
+        Sign In
+      </Link>
+      <Link
+        href="/auth/signup"
+        className="px-4 py-2 text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 rounded-md transition-colors"
+      >
+        Join as Startup
+      </Link>
+    </div>
+  )
+} 

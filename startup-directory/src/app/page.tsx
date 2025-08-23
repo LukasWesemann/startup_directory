@@ -1,4 +1,5 @@
 import { UpdatesFeed } from "@/components/updates-feed"
+import { MainNav } from "@/components/main-nav"
 import { createClient } from "@/lib/supabase/server"
 import { UpdateWithStartup } from "@/lib/types/database"
 
@@ -50,20 +51,7 @@ export default async function HomePage() {
                 Latest updates from innovative startups
               </p>
             </div>
-            <div className="flex gap-3">
-              <a
-                href="/auth/signin"
-                className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Sign In
-              </a>
-              <a
-                href="/auth/signup"
-                className="px-4 py-2 text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 rounded-md transition-colors"
-              >
-                Join as Startup
-              </a>
-            </div>
+            <MainNav />
           </div>
         </div>
       </header>

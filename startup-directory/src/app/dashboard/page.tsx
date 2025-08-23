@@ -4,6 +4,7 @@ import { Startup, Update } from "@/lib/types/database"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { formatDateShort } from "@/lib/utils"
 
 async function getDashboardData() {
   const supabase = await createClient()
@@ -137,7 +138,7 @@ export default async function DashboardPage() {
                     {update.content_md.substring(0, 150)}...
                   </p>
                   <p className="text-xs text-muted-foreground mt-2">
-                    {new Date(update.created_at).toLocaleDateString()}
+                    {formatDateShort(update.created_at)}
                   </p>
                 </div>
               ))}

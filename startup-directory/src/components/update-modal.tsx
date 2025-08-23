@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import ReactMarkdown from "react-markdown"
+import { formatDateShort } from "@/lib/utils"
 
 interface UpdateModalProps {
   update: UpdateWithStartup | null
@@ -16,11 +17,11 @@ export function UpdateModal({ update, onClose }: UpdateModalProps) {
   if (!update) return null
 
   const { startup } = update
-  const publishedDate = new Date(update.published_at).toLocaleDateString()
+  const publishedDate = formatDateShort(update.published_at)
 
   return (
     <Dialog open={!!update} onOpenChange={() => onClose()}>
-      <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+      <DialogContent className="!w-[60vw] !max-w-[60vw] !sm:max-w-[60vw] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <div className="flex items-center justify-between">
             <Link 
@@ -50,28 +51,28 @@ export function UpdateModal({ update, onClose }: UpdateModalProps) {
           )}
         </DialogHeader>
 
-        <div className="mt-6 space-y-6">
-          <div className="prose prose-sm dark:prose-invert max-w-none">
+        <div className="mt-6 space-y-8">
+          <div className="prose prose-base dark:prose-invert max-w-none break-words leading-relaxed">
             <ReactMarkdown>{update.content_md}</ReactMarkdown>
           </div>
 
           {update.images.length > 0 && (
             <div className="space-y-4">
-              <h4 className="font-medium text-foreground">Images</h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <h4 className="font-medium text-foreground text-lg">Images</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {update.images.map((image, index) => (
-                  <div key={index} className="space-y-2">
+                  <div key={index} className="space-y-3">
                     <img
                       src={image.url}
                       alt={image.alt || `Update image ${index + 1}`}
-                      className="w-full rounded-lg border border-border"
+                      className="w-full rounded-lg border border-border shadow-sm"
                       style={{
                         aspectRatio: `${image.w} / ${image.h}`,
                         objectFit: 'cover'
                       }}
                     />
                     {image.alt && (
-                      <p className="text-xs text-muted-foreground">{image.alt}</p>
+                      <p className="text-sm text-muted-foreground">{image.alt}</p>
                     )}
                   </div>
                 ))}
@@ -79,7 +80,7 @@ export function UpdateModal({ update, onClose }: UpdateModalProps) {
             </div>
           )}
 
-          <div className="border-t border-border pt-4">
+          <div className="border-t border-border pt-6">
             <p className="text-sm text-muted-foreground">
               Published on {publishedDate}
             </p>

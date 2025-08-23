@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { UpdateFormModal } from "@/components/dashboard/update-form-modal"
+import { formatDateShort } from "@/lib/utils"
 
 async function getUpdates() {
   const supabase = await createClient()
@@ -83,7 +84,7 @@ export default async function UpdatesPage() {
                         {update.is_published ? "Published" : "Draft"}
                       </Badge>
                       <span className="text-sm text-muted-foreground">
-                        {new Date(update.created_at).toLocaleDateString()}
+                        {formatDateShort(update.created_at)}
                       </span>
                     </div>
                   </div>

@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
+import { formatDateShort } from "@/lib/utils"
 
 interface UpdateCardProps {
   update: UpdateWithStartup
@@ -13,7 +14,7 @@ interface UpdateCardProps {
 
 export function UpdateCard({ update, onClick }: UpdateCardProps) {
   const { startup } = update
-  const publishedDate = new Date(update.published_at).toLocaleDateString()
+  const publishedDate = formatDateShort(update.published_at)
   
   // Extract first paragraph or limit content for preview
   const contentPreview = update.content_md.length > 200 

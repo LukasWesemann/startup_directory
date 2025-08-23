@@ -14,6 +14,7 @@ export function SignUpForm() {
   const [name, setName] = useState("")
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [success, setSuccess] = useState(false)
   const router = useRouter()
   const supabase = createClient()
 
@@ -36,14 +37,45 @@ export function SignUpForm() {
       if (error) {
         setError(error.message)
       } else {
-        router.push("/dashboard")
-        router.refresh()
+        setSuccess(true)
       }
     } catch (err) {
       setError("An unexpected error occurred")
     } finally {
       setLoading(false)
     }
+  }
+
+  if (success) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>Check Your Email</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="p-4 text-sm text-green-700 bg-green-50 dark:bg-green-950/20 dark:text-green-400 border border-green-200 dark:border-green-800 rounded-md">
+              <p className="font-medium">Account created successfully!</p>
+              <p className="mt-2">
+                We've sent a confirmation email to <strong>{email}</strong>. 
+                Please check your inbox and click the confirmation link to activate your account.
+              </p>
+            </div>
+            
+            <div className="text-sm text-muted-foreground">
+              <p>Didn't receive the email? Check your spam folder or contact support.</p>
+            </div>
+            
+            <Button 
+              onClick={() => router.push("/auth/signin")} 
+              className="w-full"
+            >
+              Go to Sign In
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    )
   }
 
   return (

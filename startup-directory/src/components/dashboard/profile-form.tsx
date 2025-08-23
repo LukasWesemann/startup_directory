@@ -27,7 +27,6 @@ export function ProfileForm({ startup }: ProfileFormProps) {
     location: startup.location || "",
     sectors: startup.sectors || [],
     stage: startup.stage,
-    is_public: startup.is_public,
   })
   const [newSector, setNewSector] = useState("")
   const [loading, setLoading] = useState(false)
@@ -227,17 +226,7 @@ export function ProfileForm({ startup }: ProfileFormProps) {
             )}
           </div>
 
-          <div className="flex items-center space-x-2">
-            <input
-              type="checkbox"
-              id="is_public"
-              checked={formData.is_public}
-              onChange={(e) => setFormData(prev => ({ ...prev, is_public: e.target.checked }))}
-              disabled={loading}
-              className="rounded border-gray-300"
-            />
-            <Label htmlFor="is_public">Make profile public</Label>
-          </div>
+
 
           <Button type="submit" disabled={loading} className="w-full">
             {loading ? "Saving..." : "Save Profile"}
