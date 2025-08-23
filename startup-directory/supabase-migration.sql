@@ -107,11 +107,21 @@ CREATE POLICY "read_published_updates" ON public.updates
     )
   );
 
+-- Owners can read their own startup data
+CREATE POLICY "owner_read_startup" ON public.startups
+  FOR SELECT TO authenticated
+  USING (id = auth.uid());
+
 -- Owners can manage their startup row
 CREATE POLICY "owner_update_startup" ON public.startups
   FOR UPDATE TO authenticated
   USING (id = auth.uid())
   WITH CHECK (id = auth.uid());
+
+-- Owners can read their own updates
+CREATE POLICY "owner_read_update" ON public.updates
+  FOR SELECT TO authenticated
+  USING (startup_id = auth.uid());
 
 -- Owners can create/update/delete their own updates
 CREATE POLICY "owner_insert_update" ON public.updates
