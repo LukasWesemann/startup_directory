@@ -23,7 +23,7 @@ export function UpdateCard({ update, onClick }: UpdateCardProps) {
 
   return (
     <Card 
-      className="cursor-pointer hover:shadow-lg transition-shadow border-border bg-card"
+      className="cursor-pointer hover:shadow-lg transition-shadow border-border bg-card flex flex-col h-full"
       onClick={onClick}
     >
       <CardHeader className="pb-3">
@@ -52,8 +52,8 @@ export function UpdateCard({ update, onClick }: UpdateCardProps) {
           <h4 className="font-medium text-foreground mt-3">{update.title}</h4>
         )}
       </CardHeader>
-      <CardContent className="pt-0">
-        <div className="prose prose-sm dark:prose-invert max-w-none">
+      <CardContent className="pt-0 flex-1 flex flex-col">
+        <div className="prose prose-sm dark:prose-invert max-w-none flex-1">
           <p className="text-muted-foreground leading-relaxed">
             {contentPreview}
           </p>

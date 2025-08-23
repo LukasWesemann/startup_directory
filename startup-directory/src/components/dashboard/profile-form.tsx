@@ -134,202 +134,216 @@ export function ProfileForm({ startup }: ProfileFormProps) {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Startup Profile</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {error && (
-            <div className="p-3 text-sm text-red-500 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-md">
-              {error}
-            </div>
-          )}
-          
-          {success && (
-            <div className="p-3 text-sm text-green-500 bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 rounded-md">
-              Profile updated successfully!
-            </div>
-          )}
-
-          <FileUpload
-            value={formData.logo_url}
-            onChange={(url) => setFormData(prev => ({ ...prev, logo_url: url || "" }))}
-            onFileSelect={handleLogoUpload}
-            disabled={loading || uploadingLogo}
-            label="Startup Logo"
-            maxSize={5}
-          />
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <Label htmlFor="name">Startup Name</Label>
-              <Input
-                id="name"
-                value={formData.name}
-                onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                required
-                disabled={loading}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="slug">URL Slug</Label>
-              <Input
-                id="slug"
-                value={formData.slug}
-                onChange={(e) => setFormData(prev => ({ ...prev, slug: e.target.value }))}
-                required
-                disabled={loading}
-                placeholder="your-startup-name"
-              />
-              <p className="text-xs text-muted-foreground">
-                Your public profile will be at: /s/{formData.slug}
-              </p>
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="tagline">Tagline</Label>
-            <Input
-              id="tagline"
-              value={formData.tagline}
-              onChange={(e) => setFormData(prev => ({ ...prev, tagline: e.target.value }))}
-              disabled={loading}
-              placeholder="A brief description of what you do"
-              maxLength={120}
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
-            <Textarea
-              id="description"
-              value={formData.description_md}
-              onChange={(e) => setFormData(prev => ({ ...prev, description_md: e.target.value }))}
-              disabled={loading}
-              placeholder="Tell people about your startup..."
-              rows={4}
-              maxLength={2000}
-            />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <Label htmlFor="website">Website URL</Label>
-              <Input
-                id="website"
-                type="url"
-                value={formData.website_url}
-                onChange={(e) => setFormData(prev => ({ ...prev, website_url: e.target.value }))}
-                disabled={loading}
-                placeholder="https://your-website.com"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="location">Location</Label>
-              <Input
-                id="location"
-                value={formData.location}
-                onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))}
-                disabled={loading}
-                placeholder="San Francisco, CA"
-              />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <Label htmlFor="email">Contact Email</Label>
-              <Input
-                id="email"
-                type="email"
-                value={formData.email}
-                onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                disabled={loading}
-                placeholder="hello@yourstartup.com"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="twitter">X (Twitter) URL</Label>
-              <Input
-                id="twitter"
-                type="url"
-                value={formData.twitter_url}
-                onChange={(e) => setFormData(prev => ({ ...prev, twitter_url: e.target.value }))}
-                disabled={loading}
-                placeholder="https://x.com/yourstartup"
-              />
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="linkedin">LinkedIn URL</Label>
-            <Input
-              id="linkedin"
-              type="url"
-              value={formData.linkedin_url}
-              onChange={(e) => setFormData(prev => ({ ...prev, linkedin_url: e.target.value }))}
-              disabled={loading}
-              placeholder="https://linkedin.com/company/yourstartup"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="stage">Stage</Label>
-            <select
-              id="stage"
-              value={formData.stage}
-              onChange={(e) => setFormData(prev => ({ ...prev, stage: e.target.value as any }))}
-              disabled={loading}
-              className="w-full px-3 py-2 border border-input bg-background rounded-md text-sm"
-            >
-              {stageOptions.map((stage) => (
-                <option key={stage} value={stage}>
-                  {stage.replace('-', ' ')}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="space-y-2">
-            <Label>Sectors</Label>
-            <div className="flex gap-2">
-              <Input
-                value={newSector}
-                onChange={(e) => setNewSector(e.target.value)}
-                disabled={loading}
-                placeholder="Add a sector (e.g., fintech, AI)"
-                onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addSector())}
-              />
-              <Button type="button" onClick={addSector} disabled={loading} variant="outline">
-                Add
-              </Button>
-            </div>
-            {formData.sectors && formData.sectors.length > 0 && (
-              <div className="flex flex-wrap gap-2 mt-2">
-                {formData.sectors.map((sector) => (
-                  <Badge key={sector} variant="secondary" className="flex items-center gap-1">
-                    {sector}
-                    <X 
-                      className="w-3 h-3 cursor-pointer" 
-                      onClick={() => removeSector(sector)}
-                    />
-                  </Badge>
-                ))}
+    <div className="max-w-4xl mx-auto">
+      <Card>
+        <CardHeader>
+          <CardTitle>Startup Profile</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-8">
+            {error && (
+              <div className="p-3 text-sm text-red-500 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-md">
+                {error}
               </div>
             )}
-          </div>
+            
+            {success && (
+              <div className="p-3 text-sm text-green-500 bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 rounded-md">
+                Profile updated successfully!
+              </div>
+            )}
 
+            <div className="max-w-md">
+              <FileUpload
+                value={formData.logo_url}
+                onChange={(url) => setFormData(prev => ({ ...prev, logo_url: url || "" }))}
+                onFileSelect={handleLogoUpload}
+                disabled={loading || uploadingLogo}
+                label="Startup Logo"
+                maxSize={5}
+              />
+            </div>
 
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <Label htmlFor="name">Startup Name</Label>
+                <Input
+                  id="name"
+                  value={formData.name}
+                  onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                  required
+                  disabled={loading}
+                />
+              </div>
 
-          <Button type="submit" disabled={loading} className="w-full">
-            {loading ? "Saving..." : "Save Profile"}
-          </Button>
-        </form>
-      </CardContent>
-    </Card>
+              <div className="space-y-2">
+                <Label htmlFor="slug">URL Slug</Label>
+                <Input
+                  id="slug"
+                  value={formData.slug}
+                  onChange={(e) => setFormData(prev => ({ ...prev, slug: e.target.value }))}
+                  required
+                  disabled={loading}
+                  placeholder="your-startup-name"
+                />
+                <p className="text-xs text-muted-foreground">
+                  Your public profile will be at: /s/{formData.slug}
+                </p>
+              </div>
+            </div>
+
+            <div className="max-w-2xl">
+              <div className="space-y-2">
+                <Label htmlFor="tagline">Tagline</Label>
+                <Input
+                  id="tagline"
+                  value={formData.tagline}
+                  onChange={(e) => setFormData(prev => ({ ...prev, tagline: e.target.value }))}
+                  disabled={loading}
+                  placeholder="A brief description of what you do"
+                  maxLength={120}
+                />
+              </div>
+            </div>
+
+            <div className="max-w-3xl">
+              <div className="space-y-2">
+                <Label htmlFor="description">Description</Label>
+                <Textarea
+                  id="description"
+                  value={formData.description_md}
+                  onChange={(e) => setFormData(prev => ({ ...prev, description_md: e.target.value }))}
+                  disabled={loading}
+                  placeholder="Tell people about your startup..."
+                  rows={4}
+                  maxLength={2000}
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <Label htmlFor="website">Website URL</Label>
+                <Input
+                  id="website"
+                  type="url"
+                  value={formData.website_url}
+                  onChange={(e) => setFormData(prev => ({ ...prev, website_url: e.target.value }))}
+                  disabled={loading}
+                  placeholder="https://your-website.com"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="location">Location</Label>
+                <Input
+                  id="location"
+                  value={formData.location}
+                  onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))}
+                  disabled={loading}
+                  placeholder="San Francisco, CA"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <Label htmlFor="email">Contact Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                  disabled={loading}
+                  placeholder="hello@yourstartup.com"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="twitter">X (Twitter) URL</Label>
+                <Input
+                  id="twitter"
+                  type="url"
+                  value={formData.twitter_url}
+                  onChange={(e) => setFormData(prev => ({ ...prev, twitter_url: e.target.value }))}
+                  disabled={loading}
+                  placeholder="https://x.com/yourstartup"
+                />
+              </div>
+            </div>
+
+            <div className="max-w-2xl">
+              <div className="space-y-2">
+                <Label htmlFor="linkedin">LinkedIn URL</Label>
+                <Input
+                  id="linkedin"
+                  type="url"
+                  value={formData.linkedin_url}
+                  onChange={(e) => setFormData(prev => ({ ...prev, linkedin_url: e.target.value }))}
+                  disabled={loading}
+                  placeholder="https://linkedin.com/company/yourstartup"
+                />
+              </div>
+            </div>
+
+            <div className="max-w-md">
+              <div className="space-y-2">
+                <Label htmlFor="stage">Stage</Label>
+                <select
+                  id="stage"
+                  value={formData.stage}
+                  onChange={(e) => setFormData(prev => ({ ...prev, stage: e.target.value as any }))}
+                  disabled={loading}
+                  className="w-full px-3 py-2 border border-input bg-background rounded-md text-sm"
+                >
+                  {stageOptions.map((stage) => (
+                    <option key={stage} value={stage}>
+                      {stage.replace('-', ' ')}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="max-w-2xl">
+              <div className="space-y-2">
+                <Label>Sectors</Label>
+                <div className="flex gap-2">
+                  <Input
+                    value={newSector}
+                    onChange={(e) => setNewSector(e.target.value)}
+                    disabled={loading}
+                    placeholder="Add a sector (e.g., fintech, AI)"
+                    onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addSector())}
+                  />
+                  <Button type="button" onClick={addSector} disabled={loading} variant="outline">
+                    Add
+                  </Button>
+                </div>
+                {formData.sectors && formData.sectors.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {formData.sectors.map((sector) => (
+                      <Badge key={sector} variant="secondary" className="flex items-center gap-1">
+                        {sector}
+                        <X 
+                          className="w-3 h-3 cursor-pointer" 
+                          onClick={() => removeSector(sector)}
+                        />
+                      </Badge>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="max-w-md">
+              <Button type="submit" disabled={loading} className="w-full">
+                {loading ? "Saving..." : "Save Profile"}
+              </Button>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
   )
 } 

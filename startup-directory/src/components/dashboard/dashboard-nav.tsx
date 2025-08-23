@@ -16,12 +16,15 @@ export function DashboardNav() {
   }
 
   return (
-    <header className="border-b border-border bg-card">
-      <div className="container mx-auto px-4 py-4">
+    <header className="border-b border-border">
+              <div className="container mx-auto px-4 py-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-6">
-            <Link href="/" className="text-2xl font-bold text-foreground">
-              Startup Directory
+            <Link href="/" className="flex items-center gap-3">
+              <img src="/logo.png" alt="Startup Pulse Logo" className="h-12 w-auto" />
+              <span className="text-3xl font-bold text-foreground">
+                MLAI Valley
+              </span>
             </Link>
             <nav className="flex space-x-4">
               <Link 

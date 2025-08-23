@@ -1,5 +1,6 @@
 import { UpdatesFeed } from "@/components/updates-feed"
 import { MainNav } from "@/components/main-nav"
+import { SponsorSection } from "@/components/sponsor-section"
 import { createClient } from "@/lib/supabase/server"
 import { UpdateWithStartup } from "@/lib/types/database"
 
@@ -43,13 +44,11 @@ export default async function HomePage() {
       <header className="border-b border-border">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
-            <div>
+            <div className="flex items-center gap-3">
+              <img src="/logo.png" alt="Startup Pulse Logo" className="h-12 w-auto" />
               <h1 className="text-3xl font-bold text-foreground">
-                Startup Directory
+                MLAI Valley
               </h1>
-              <p className="text-muted-foreground mt-2">
-                Latest updates from innovative startups
-              </p>
             </div>
             <MainNav />
           </div>
@@ -57,6 +56,7 @@ export default async function HomePage() {
       </header>
 
       <main className="container mx-auto px-4 py-8">
+        <SponsorSection />
         {!isSupabaseConfigured ? (
           <div className="max-w-2xl mx-auto text-center space-y-6">
             <div className="bg-card border border-border rounded-lg p-8">
