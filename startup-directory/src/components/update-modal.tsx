@@ -21,7 +21,7 @@ export function UpdateModal({ update, onClose }: UpdateModalProps) {
 
   return (
     <Dialog open={!!update} onOpenChange={() => onClose()}>
-      <DialogContent className="!w-[60vw] !max-w-[60vw] !sm:max-w-[60vw] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="!w-[48vw] !max-w-[48vw] !sm:max-w-[48vw] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <div className="flex items-center justify-between">
             <Link 
