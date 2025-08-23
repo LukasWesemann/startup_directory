@@ -23,11 +23,16 @@ export function UpdateCard({ update, onClick }: UpdateCardProps) {
 
   return (
     <Card 
-      className="cursor-pointer hover:shadow-lg transition-shadow border-border bg-card flex flex-col h-full"
+      className="cursor-pointer transition-all duration-300 ease-in-out flex flex-col h-full hover:scale-102 hover:shadow-2xl shadow-lg"
+      style={{
+        backgroundColor: 'transparent',
+        boxShadow: '0 10px 25px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2)',
+        border: '1px solid #404040'
+      }}
       onClick={onClick}
     >
       <CardHeader className="pb-3">
-        <div className="flex items-center justify-between">
+        <div className="flex items-start justify-between">
           <Link 
             href={`/s/${startup.slug}`}
             onClick={(e) => e.stopPropagation()}
@@ -44,9 +49,27 @@ export function UpdateCard({ update, onClick }: UpdateCardProps) {
               <p className="text-sm text-muted-foreground">{startup.tagline}</p>
             </div>
           </Link>
-          <Badge variant="secondary" className="text-xs">
+        </div>
+        
+        {/* Tags positioned at bottom of profile section */}
+        <div className="flex items-center space-x-2 mt-2">
+          <Badge 
+            className="text-xs rounded-[4px] text-white"
+            style={{ backgroundColor: '#0F8A8A' }}
+          >
             {startup.stage.replace('-', ' ')}
           </Badge>
+          {startup.sectors && startup.sectors.length > 0 && (
+            <Badge 
+              className="text-xs rounded-[4px] text-gray-800"
+              style={{ 
+                backgroundColor: '#F5F5DC',
+                border: '1px solid #E5E5D0'
+              }}
+            >
+              {startup.sectors[0]}
+            </Badge>
+          )}
         </div>
         {update.title && (
           <h4 className="font-medium text-foreground mt-3">{update.title}</h4>

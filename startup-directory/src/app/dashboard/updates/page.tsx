@@ -52,7 +52,12 @@ export default async function UpdatesPage() {
       </div>
 
       {updates.length === 0 ? (
-        <Card>
+        <Card 
+          style={{
+            backgroundColor: 'rgba(40, 40, 40, 0.9)',
+            backdropFilter: 'blur(12px)'
+          }}
+        >
           <CardContent className="text-center py-12">
             <div className="space-y-4">
               <h3 className="text-lg font-medium text-foreground">
@@ -72,7 +77,13 @@ export default async function UpdatesPage() {
       ) : (
         <div className="space-y-6">
           {updates.map((update) => (
-            <Card key={update.id}>
+            <Card 
+              key={update.id}
+              style={{
+                backgroundColor: 'rgba(40, 40, 40, 0.9)',
+                backdropFilter: 'blur(12px)'
+              }}
+            >
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div className="space-y-1">
@@ -80,7 +91,12 @@ export default async function UpdatesPage() {
                       <CardTitle className="text-lg">{update.title}</CardTitle>
                     )}
                     <div className="flex items-center gap-2">
-                      <Badge variant={update.is_published ? "default" : "secondary"}>
+                      <Badge 
+                        className="text-white"
+                        style={{ 
+                          backgroundColor: update.is_published ? '#0F8A8A' : '#6B7280'
+                        }}
+                      >
                         {update.is_published ? "Published" : "Draft"}
                       </Badge>
                       <span className="text-sm text-muted-foreground">

@@ -27,6 +27,7 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased`}
+        style={{ backgroundColor: '#0f0f0f' }}
       >
         <ThemeProvider>
           {children}

@@ -58,7 +58,12 @@ export default async function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <Card>
+        <Card 
+          style={{
+            backgroundColor: 'rgba(40, 40, 40, 0.9)',
+            backdropFilter: 'blur(12px)'
+          }}
+        >
           <CardHeader>
             <CardTitle>Profile Status</CardTitle>
           </CardHeader>
@@ -82,7 +87,12 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card 
+          style={{
+            backgroundColor: 'rgba(40, 40, 40, 0.9)',
+            backdropFilter: 'blur(12px)'
+          }}
+        >
           <CardHeader>
             <CardTitle>Updates</CardTitle>
           </CardHeader>
@@ -103,7 +113,12 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card 
+          style={{
+            backgroundColor: 'rgba(40, 40, 40, 0.9)',
+            backdropFilter: 'blur(12px)'
+          }}
+        >
           <CardHeader>
             <CardTitle>Public Profile</CardTitle>
           </CardHeader>
@@ -123,7 +138,12 @@ export default async function DashboardPage() {
       </div>
 
       {updates.length > 0 && (
-        <Card>
+        <Card 
+          style={{
+            backgroundColor: 'rgba(40, 40, 40, 0.9)',
+            backdropFilter: 'blur(12px)'
+          }}
+        >
           <CardHeader>
             <CardTitle>Recent Updates</CardTitle>
           </CardHeader>

@@ -135,7 +135,12 @@ export function ProfileForm({ startup }: ProfileFormProps) {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <Card>
+      <Card 
+        style={{
+          backgroundColor: 'rgba(40, 40, 40, 0.9)',
+          backdropFilter: 'blur(12px)'
+        }}
+      >
         <CardHeader>
           <CardTitle>Startup Profile</CardTitle>
         </CardHeader>
@@ -323,7 +328,14 @@ export function ProfileForm({ startup }: ProfileFormProps) {
                 {formData.sectors && formData.sectors.length > 0 && (
                   <div className="flex flex-wrap gap-2 mt-2">
                     {formData.sectors.map((sector) => (
-                      <Badge key={sector} variant="secondary" className="flex items-center gap-1">
+                      <Badge 
+                        key={sector} 
+                        className="flex items-center gap-1 text-gray-800"
+                        style={{ 
+                          backgroundColor: '#F5F5DC',
+                          border: '1px solid #E5E5D0'
+                        }}
+                      >
                         {sector}
                         <X 
                           className="w-3 h-3 cursor-pointer" 

@@ -51,7 +51,7 @@ export default async function StartupProfilePage({
   const { startup, updates } = data
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen" style={{ backgroundColor: '#0f0f0f' }}>
       <header className="border-b border-border">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
@@ -80,7 +80,12 @@ export default async function StartupProfilePage({
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto space-y-8">
           {/* Startup Header */}
-          <Card>
+          <Card 
+            style={{
+              backgroundColor: 'rgba(40, 40, 40, 0.9)',
+              backdropFilter: 'blur(12px)'
+            }}
+          >
             <CardContent className="pt-6">
               <div className="space-y-4">
                 <div className="flex items-start gap-4">
@@ -103,7 +108,10 @@ export default async function StartupProfilePage({
                 </div>
 
                 <div className="flex flex-wrap gap-3">
-                  <Badge variant="secondary">
+                  <Badge 
+                    className="text-white"
+                    style={{ backgroundColor: '#0F8A8A' }}
+                  >
                     {startup.stage.replace('-', ' ')}
                   </Badge>
                   {startup.location && (
@@ -176,7 +184,14 @@ export default async function StartupProfilePage({
                     <p className="text-sm font-medium text-foreground">Sectors</p>
                     <div className="flex flex-wrap gap-2">
                       {startup.sectors.map((sector: string) => (
-                        <Badge key={sector} variant="outline">
+                        <Badge 
+                          key={sector}
+                          className="text-gray-800"
+                          style={{ 
+                            backgroundColor: '#F5F5DC',
+                            border: '1px solid #E5E5D0'
+                          }}
+                        >
                           {sector}
                         </Badge>
                       ))}
@@ -205,7 +220,12 @@ export default async function StartupProfilePage({
             </h2>
             
             {updates.length === 0 ? (
-              <Card>
+              <Card 
+                style={{
+                  backgroundColor: 'rgba(40, 40, 40, 0.9)',
+                  backdropFilter: 'blur(12px)'
+                }}
+              >
                 <CardContent className="text-center py-12">
                   <p className="text-muted-foreground">
                     No updates published yet.
@@ -215,7 +235,13 @@ export default async function StartupProfilePage({
             ) : (
               <div className="space-y-6">
                 {updates.map((update) => (
-                  <Card key={update.id}>
+                  <Card 
+                    key={update.id}
+                    style={{
+                      backgroundColor: 'rgba(40, 40, 40, 0.9)',
+                      backdropFilter: 'blur(12px)'
+                    }}
+                  >
                     <CardHeader>
                       <div className="space-y-2">
                         {update.title && (

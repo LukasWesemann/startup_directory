@@ -2,14 +2,14 @@ import Image from "next/image"
 
 export function SponsorSection() {
   return (
-    <section className="py-8 border-b border-border">
+    <section className="py-8">
       <div className="container mx-auto px-4">
         <div className="text-center mb-4">
           <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
             Sponsored by
           </h2>
         </div>
-        <div className="flex items-center justify-center space-x-12 mb-4">
+        <div className="flex items-center justify-center space-x-12 mb-8">
           {[1, 2, 3].map((index) => (
             <div key={index} className="flex items-center justify-center">
               <Image

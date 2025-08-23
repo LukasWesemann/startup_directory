@@ -4,6 +4,7 @@ import { UpdateWithStartup } from "@/lib/types/database"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import ReactMarkdown from "react-markdown"
 import { formatDateShort } from "@/lib/utils"
@@ -21,7 +22,14 @@ export function UpdateModal({ update, onClose }: UpdateModalProps) {
 
   return (
     <Dialog open={!!update} onOpenChange={() => onClose()}>
-      <DialogContent className="!w-[48vw] !max-w-[48vw] !sm:max-w-[48vw] max-h-[90vh] overflow-y-auto">
+      <DialogContent 
+        className="!w-[48vw] !max-w-[48vw] !sm:max-w-[48vw] max-h-[90vh] overflow-y-auto"
+        style={{
+          backgroundColor: '#0f0f0f',
+          boxShadow: '0 10px 25px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2)',
+          border: '1px solid #404040'
+        }}
+      >
         <DialogHeader>
           <div className="flex items-center justify-between">
             <Link 
@@ -34,14 +42,19 @@ export function UpdateModal({ update, onClose }: UpdateModalProps) {
                   {startup.name.substring(0, 2).toUpperCase()}
                 </AvatarFallback>
               </Avatar>
-              <div>
-                <h3 className="font-bold text-lg text-foreground">{startup.name}</h3>
-                <p className="text-sm text-muted-foreground">{startup.tagline}</p>
+              <div className="flex items-start space-x-3">
+                <div>
+                  <h3 className="font-bold text-lg text-foreground">{startup.name}</h3>
+                  <p className="text-sm text-muted-foreground">{startup.tagline}</p>
+                </div>
+                <Badge 
+                  className="text-white"
+                  style={{ backgroundColor: '#0F8A8A' }}
+                >
+                  {startup.stage.replace('-', ' ')}
+                </Badge>
               </div>
             </Link>
-            <Badge variant="secondary">
-              {startup.stage.replace('-', ' ')}
-            </Badge>
           </div>
           
           {update.title && (
@@ -81,9 +94,16 @@ export function UpdateModal({ update, onClose }: UpdateModalProps) {
           )}
 
           <div className="border-t border-border pt-6">
-            <p className="text-sm text-muted-foreground">
-              Published on {publishedDate}
-            </p>
+            <div className="flex items-center justify-between">
+              <p className="text-sm text-muted-foreground">
+                Published on {publishedDate}
+              </p>
+              <Link href={`/s/${startup.slug}`}>
+                <Button variant="outline" size="sm">
+                  View Profile Page
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </DialogContent>
