@@ -2,6 +2,7 @@ import { UpdatesFeed } from "@/components/updates-feed"
 import { MainNav } from "@/components/main-nav"
 import { SponsorSection } from "@/components/sponsor-section"
 import { EmailVerificationHandler } from "@/components/email-verification-handler"
+import { Logo } from "@/components/logo"
 import { createClient } from "@/lib/supabase/server"
 import { UpdateWithStartup } from "@/lib/types/database"
 
@@ -46,15 +47,7 @@ export default async function HomePage() {
       <header>
           <div className="container mx-auto px-4 py-6">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <img src="/logo.png" alt="Startup Pulse Logo" className="h-12 w-auto -mt-1" />
-                <div className="flex items-baseline gap-2">
-                  <img src="/MLAI_textlogo.png" alt="MLAI" className="h-6 w-auto" />
-                  <span className="text-2xl font-normal text-foreground" style={{ fontFamily: 'var(--font-serif)' }}>
-                    Valley
-                  </span>
-                </div>
-              </div>
+              <Logo />
               <MainNav />
             </div>
           </div>
