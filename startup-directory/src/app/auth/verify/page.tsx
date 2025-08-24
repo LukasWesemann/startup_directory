@@ -1,5 +1,6 @@
 "use client"
 
+import { Suspense } from "react"
 import { MainNav } from "@/components/main-nav"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -8,7 +9,7 @@ import Link from "next/link"
 import { CheckCircle, XCircle } from "lucide-react"
 import { useSearchParams } from "next/navigation"
 
-export default function EmailVerificationPage() {
+function EmailVerificationContent() {
   const searchParams = useSearchParams()
   
   // Check for error parameters
@@ -141,5 +142,32 @@ export default function EmailVerificationPage() {
         </div>
       </main>
     </div>
+  )
+}
+
+export default function EmailVerificationPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen" style={{ backgroundColor: '#0f0f0f' }}>
+        <header>
+          <div className="container mx-auto px-4 py-6">
+            <div className="flex items-center justify-between">
+              <Logo />
+              <MainNav />
+            </div>
+          </div>
+        </header>
+        <main className="container mx-auto px-4 py-8">
+          <div className="flex items-center justify-center min-h-[60vh]">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto mb-4"></div>
+              <p className="text-muted-foreground">Loading...</p>
+            </div>
+          </div>
+        </main>
+      </div>
+    }>
+      <EmailVerificationContent />
+    </Suspense>
   )
 } 

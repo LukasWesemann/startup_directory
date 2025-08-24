@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import { UpdatesFeed } from "@/components/updates-feed"
 import { MainNav } from "@/components/main-nav"
 import { SponsorSection } from "@/components/sponsor-section"
@@ -37,13 +38,17 @@ async function getLatestUpdates(): Promise<UpdateWithStartup[]> {
   }
 }
 
+export const dynamic = 'force-dynamic'
+
 export default async function HomePage() {
   const updates = await getLatestUpdates()
   const isSupabaseConfigured = process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#0f0f0f' }}>
-      <EmailVerificationHandler />
+      <Suspense fallback={null}>
+        <EmailVerificationHandler />
+      </Suspense>
       <header>
           <div className="container mx-auto px-4 py-6">
             <div className="flex items-center justify-between">
