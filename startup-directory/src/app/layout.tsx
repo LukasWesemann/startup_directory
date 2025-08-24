@@ -20,7 +20,7 @@ const inriaSerif = Inria_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Startup Directory",
+  title: "Australian Startup Directory",
   description: "A directory of startups sharing their latest updates and progress",
 };
 
