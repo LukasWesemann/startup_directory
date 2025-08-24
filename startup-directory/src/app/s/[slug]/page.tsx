@@ -137,7 +137,7 @@ export default async function StartupPage({ params }: PageProps) {
                   )}
                 </div>
 
-                {/* Row 2: Social Media Links and Email */}
+                {/* Row 2: Social Media Links */}
                 <div className="flex flex-wrap gap-3">
                   {startup.website_url && (
                     <a 
@@ -178,9 +178,11 @@ export default async function StartupPage({ params }: PageProps) {
                 </div>
 
                 {/* Row 3: Description */}
-                {startup.description && (
+                {startup.description_md && (
                   <div className="text-sm text-muted-foreground leading-relaxed">
-                    {startup.description}
+                    {startup.description_md.split('\n').map((paragraph: string, i: number) => (
+                      <p key={i} className="mb-2">{paragraph}</p>
+                    ))}
                   </div>
                 )}
               </div>
@@ -217,7 +219,9 @@ export default async function StartupPage({ params }: PageProps) {
                         </div>
                         
                         <div className="prose prose-sm prose-invert max-w-none">
-                          <div dangerouslySetInnerHTML={{ __html: update.content }} />
+                          {update.content_md && update.content_md.split('\n').map((paragraph: string, i: number) => (
+                            <p key={i} className="mb-2">{paragraph}</p>
+                          ))}
                         </div>
                       </div>
                     </CardContent>

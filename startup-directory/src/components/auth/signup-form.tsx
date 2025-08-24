@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Loader2 } from "lucide-react"
 
 export function SignUpForm() {
   const [email, setEmail] = useState("")
@@ -48,7 +49,7 @@ export function SignUpForm() {
 
   if (success) {
     return (
-      <Card 
+      <Card
         style={{
           backgroundColor: 'transparent',
           boxShadow: '0 10px 25px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2)',
@@ -117,6 +118,7 @@ export function SignUpForm() {
               required
               disabled={loading}
               placeholder="Your startup name"
+              className={loading ? "opacity-50" : ""}
             />
           </div>
           
@@ -130,6 +132,7 @@ export function SignUpForm() {
               required
               disabled={loading}
               placeholder="your@email.com"
+              className={loading ? "opacity-50" : ""}
             />
           </div>
           
@@ -144,6 +147,7 @@ export function SignUpForm() {
               disabled={loading}
               minLength={6}
               placeholder="Min 6 characters"
+              className={loading ? "opacity-50" : ""}
             />
           </div>
           
@@ -152,13 +156,22 @@ export function SignUpForm() {
               type="submit" 
               disabled={loading}
               style={{
-                backgroundColor: '#0F8A8A',
-                borderColor: '#0F8A8A',
+                backgroundColor: loading ? '#6B7280' : '#0F8A8A',
+                borderColor: loading ? '#6B7280' : '#0F8A8A',
                 color: 'white'
               }}
-              className="hover:bg-teal-700 hover:border-teal-700"
+              className={`hover:bg-teal-700 hover:border-teal-700 transition-all duration-200 ${
+                loading ? 'cursor-not-allowed opacity-75' : ''
+              }`}
             >
-              {loading ? "Creating account..." : "Create Account"}
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Creating account...
+                </>
+              ) : (
+                "Create Account"
+              )}
             </Button>
           </div>
         </form>

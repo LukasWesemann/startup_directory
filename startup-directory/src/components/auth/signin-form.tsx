@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Loader2 } from "lucide-react"
 
 export function SignInForm() {
   const [email, setEmail] = useState("")
@@ -65,6 +66,7 @@ export function SignInForm() {
               onChange={(e) => setEmail(e.target.value)}
               required
               disabled={loading}
+              className={loading ? "opacity-50" : ""}
             />
           </div>
           
@@ -77,6 +79,7 @@ export function SignInForm() {
               onChange={(e) => setPassword(e.target.value)}
               required
               disabled={loading}
+              className={loading ? "opacity-50" : ""}
             />
           </div>
           
@@ -85,13 +88,22 @@ export function SignInForm() {
               type="submit" 
               disabled={loading}
               style={{
-                backgroundColor: '#0F8A8A',
-                borderColor: '#0F8A8A',
+                backgroundColor: loading ? '#6B7280' : '#0F8A8A',
+                borderColor: loading ? '#6B7280' : '#0F8A8A',
                 color: 'white'
               }}
-              className="hover:bg-teal-700 hover:border-teal-700"
+              className={`hover:bg-teal-700 hover:border-teal-700 transition-all duration-200 ${
+                loading ? 'cursor-not-allowed opacity-75' : ''
+              }`}
             >
-              {loading ? "Signing in..." : "Sign In"}
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Signing in...
+                </>
+              ) : (
+                "Sign In"
+              )}
             </Button>
           </div>
         </form>
