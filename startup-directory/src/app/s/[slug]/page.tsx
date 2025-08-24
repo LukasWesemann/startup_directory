@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Logo } from "@/components/logo"
+import { MainNav } from "@/components/main-nav"
 import Link from "next/link"
 import { MapPin, Globe, ExternalLink, Twitter, Linkedin, Calendar, MessageSquare } from "lucide-react"
 import { UpdateWithStartup } from "@/lib/types/database"
@@ -74,18 +75,7 @@ export default async function StartupPage({ params }: PageProps) {
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <Logo />
-            <div className="flex gap-3">
-              <Link href="/auth/signin">
-                <Button variant="outline" size="sm">
-                  Sign In
-                </Button>
-              </Link>
-              <Link href="/auth/signup">
-                <Button size="sm">
-                  Join as Startup
-                </Button>
-              </Link>
-            </div>
+            <MainNav />
           </div>
         </div>
       </header>
