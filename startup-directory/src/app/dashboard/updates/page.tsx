@@ -7,6 +7,7 @@ import Link from "next/link"
 import { UpdateFormModal } from "@/components/dashboard/update-form-modal"
 import { formatDateShort } from "@/lib/utils"
 import { Pen, Plus } from "lucide-react"
+import { DeleteUpdateButton } from "./delete-update-button"
 
 async function getUpdates() {
   const supabase = await createClient()
@@ -121,12 +122,15 @@ export default async function UpdatesPage() {
                       </span>
                     </div>
                   </div>
-                  <UpdateFormModal updateId={update.id} update={update}>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer transition-colors">
-                      <Pen className="h-4 w-4" />
-                      Edit
-                    </div>
-                  </UpdateFormModal>
+                  <div className="flex items-center gap-4">
+                    <UpdateFormModal updateId={update.id} update={update}>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground cursor-pointer transition-colors">
+                        <Pen className="h-4 w-4" />
+                        Edit
+                      </div>
+                    </UpdateFormModal>
+                    <DeleteUpdateButton updateId={update.id} updateTitle={update.title} />
+                  </div>
                 </div>
               </CardHeader>
               <CardContent>
