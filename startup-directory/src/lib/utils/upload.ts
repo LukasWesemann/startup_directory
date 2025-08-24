@@ -19,10 +19,9 @@ export async function uploadFile(
       })
 
     if (error) {
-      // If bucket doesn't exist, create a temporary solution
+      // If bucket doesn't exist, throw error instead of fallback
       if (error.message.includes('bucket') || error.message.includes('not found')) {
-        console.warn('Storage bucket not found, using temporary URL')
-        return URL.createObjectURL(file)
+        throw new Error('Storage bucket not found. Please configure storage in your Supabase project.')
       }
       throw new Error(`Upload failed: ${error.message}`)
     }
@@ -34,9 +33,8 @@ export async function uploadFile(
 
     return publicUrl
   } catch (err: any) {
-    // Fallback to temporary URL if storage is not available
-    console.warn('Storage not available, using temporary URL:', err.message)
-    return URL.createObjectURL(file)
+    // Don't create blob URLs as fallback to avoid memory leaks
+    throw new Error(`Upload failed: ${err.message}`)
   }
 }
 

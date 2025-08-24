@@ -1,21 +1,13 @@
 "use client"
 
 import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
 import { HamburgerMenu } from "@/components/ui/hamburger-menu"
 import { Logo } from "@/components/logo"
+import { useAuth } from "@/lib/hooks/use-auth"
 
 export function DashboardNav() {
-  const router = useRouter()
-  const supabase = createClient()
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut()
-    router.push("/")
-    router.refresh()
-  }
+  const { signOut } = useAuth()
 
   const desktopNav = (
     <div className="hidden md:flex items-center space-x-4">
@@ -40,7 +32,7 @@ export function DashboardNav() {
         </Link>
       </nav>
       
-      <Button variant="outline" onClick={handleSignOut}>
+      <Button variant="outline" onClick={signOut}>
         Sign Out
       </Button>
     </div>
@@ -69,7 +61,7 @@ export function DashboardNav() {
       <div className="pt-2">
         <Button 
           variant="outline" 
-          onClick={handleSignOut}
+          onClick={signOut}
           className="w-full justify-start"
         >
           Sign Out
@@ -79,7 +71,7 @@ export function DashboardNav() {
   )
 
   return (
-    <header>
+    <header className="pt-2">
       <div className="container mx-auto px-4 py-6">
         <div className="flex items-center justify-between">
           <Logo />

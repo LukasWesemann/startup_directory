@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import ReactMarkdown from "react-markdown"
-import { formatDateShort } from "@/lib/utils"
+import { formatDateShort, cardStyle } from "@/lib/utils"
 
 interface UpdateModalProps {
   update: UpdateWithStartup | null
@@ -24,11 +24,7 @@ export function UpdateModal({ update, onClose }: UpdateModalProps) {
     <Dialog open={!!update} onOpenChange={() => onClose()}>
       <DialogContent 
         className="!w-[90vw] !max-w-[90vw] sm:!w-[48vw] sm:!max-w-[48vw] max-h-[90vh] flex flex-col"
-        style={{
-          backgroundColor: '#0f0f0f',
-          boxShadow: '0 10px 25px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2)',
-          border: '1px solid #404040'
-        }}
+        style={{ ...cardStyle, backgroundColor: '#0f0f0f' }}
       >
         <DialogHeader className="flex-shrink-0">
           <div className="flex items-start justify-between">
@@ -57,17 +53,20 @@ export function UpdateModal({ update, onClose }: UpdateModalProps) {
             >
               {startup.stage.replace('-', ' ')}
             </Badge>
-            {startup.sectors && startup.sectors.length > 0 && (
-              <Badge 
-                className="text-xs rounded-[4px] text-gray-800"
-                style={{ 
-                  backgroundColor: '#F5F5DC',
-                  border: '1px solid #E5E5D0'
-                }}
-              >
-                {startup.sectors[0]}
-              </Badge>
-            )}
+            {startup.sectors && startup.sectors.length > 0 && 
+              startup.sectors.map((sector: string) => (
+                <Badge 
+                  key={sector}
+                  className="text-xs rounded-[4px] text-gray-800"
+                  style={{ 
+                    backgroundColor: '#F5F5DC',
+                    border: '1px solid #E5E5D0'
+                  }}
+                >
+                  {sector}
+                </Badge>
+              ))
+            }
           </div>
           
           {update.title && (

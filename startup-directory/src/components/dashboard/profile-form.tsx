@@ -13,6 +13,7 @@ import { FileUpload } from "@/components/ui/file-upload"
 import { profileSchema, stageOptions, type ProfileFormData } from "@/lib/validations"
 import { Startup } from "@/lib/types/database"
 import { uploadFile, deleteFile } from "@/lib/utils/upload"
+import { cardStyle } from "@/lib/utils"
 import { X } from "lucide-react"
 
 interface ProfileFormProps {
@@ -60,13 +61,20 @@ export function ProfileForm({ startup }: ProfileFormProps) {
         .eq('id', startup.id)
 
       if (error) {
-        setError(error.message || 'Failed to save logo')
+        setError(`Failed to save logo: ${error.message}`)
       } else {
         setSuccess(true)
         router.refresh()
       }
     } catch (err: any) {
-      setError(err.message || 'Failed to upload logo')
+      // Provide more specific error messages
+      if (err.message?.includes('Storage bucket not found')) {
+        setError('Storage not configured. Please set up storage buckets in your Supabase project.')
+      } else if (err.message?.includes('network')) {
+        setError('Network error. Please check your connection and try again.')
+      } else {
+        setError(err.message || 'Failed to upload logo. Please try again.')
+      }
     } finally {
       setUploadingLogo(false)
     }
@@ -135,13 +143,7 @@ export function ProfileForm({ startup }: ProfileFormProps) {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <Card 
-        style={{
-          backgroundColor: 'transparent',
-          boxShadow: '0 10px 25px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2)',
-          border: '1px solid #404040'
-        }}
-      >
+      <Card style={cardStyle}>
         <CardHeader>
           <CardTitle>Startup Profile</CardTitle>
         </CardHeader>

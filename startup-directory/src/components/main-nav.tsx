@@ -1,43 +1,12 @@
 "use client"
 
 import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
-import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
 import { HamburgerMenu } from "@/components/ui/hamburger-menu"
-import type { User } from "@supabase/supabase-js"
+import { useAuth } from "@/lib/hooks/use-auth"
 
 export function MainNav() {
-  const router = useRouter()
-  const supabase = createClient()
-  const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    const getUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser()
-      setUser(user)
-      setLoading(false)
-    }
-
-    getUser()
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        setUser(session?.user ?? null)
-        setLoading(false)
-      }
-    )
-
-    return () => subscription.unsubscribe()
-  }, [supabase.auth])
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut()
-    router.push("/")
-    router.refresh()
-  }
+  const { user, loading, signOut } = useAuth()
 
   if (loading) {
     return (
@@ -73,7 +42,7 @@ export function MainNav() {
           </Link>
         </nav>
         
-        <Button variant="outline" onClick={handleSignOut}>
+        <Button variant="outline" onClick={signOut}>
           Sign Out
         </Button>
       </div>
@@ -102,7 +71,7 @@ export function MainNav() {
         <div className="pt-2">
           <Button 
             variant="outline" 
-            onClick={handleSignOut}
+            onClick={signOut}
             className="w-full justify-start"
           >
             Sign Out

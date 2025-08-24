@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { UpdateFormModal } from "@/components/dashboard/update-form-modal"
 import { formatDateShort } from "@/lib/utils"
-import { Pen } from "lucide-react"
+import { Pen, Plus } from "lucide-react"
 
 async function getUpdates() {
   const supabase = await createClient()
@@ -46,7 +46,14 @@ export default async function UpdatesPage() {
           </p>
         </div>
         <UpdateFormModal>
-          <Button>
+          <Button 
+            className="text-white hover:bg-teal-700 hover:border-teal-700 transition-all duration-200 cursor-pointer shadow-md hover:shadow-lg"
+            style={{
+              backgroundColor: '#0F8A8A',
+              borderColor: '#0F8A8A',
+            }}
+          >
+            <Plus className="w-4 h-4 mr-2" />
             Create Update
           </Button>
         </UpdateFormModal>
@@ -69,7 +76,14 @@ export default async function UpdatesPage() {
                 Share your first update to let people know what you're working on.
               </p>
               <UpdateFormModal>
-                <Button>
+                <Button
+                  className="text-white hover:bg-teal-700 hover:border-teal-700 transition-all duration-200 cursor-pointer shadow-md hover:shadow-lg"
+                  style={{
+                    backgroundColor: '#0F8A8A',
+                    borderColor: '#0F8A8A',
+                  }}
+                >
+                  <Plus className="w-4 h-4 mr-2" />
                   Create Your First Update
                 </Button>
               </UpdateFormModal>

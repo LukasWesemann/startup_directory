@@ -114,7 +114,7 @@ export default async function StartupPage({ params }: PageProps) {
                 {/* Row 1: Stage and Location */}
                 <div className="flex flex-wrap gap-3">
                   <Badge 
-                    className="text-white"
+                    className="text-xs rounded-[4px] text-white"
                     style={{ backgroundColor: '#0F8A8A' }}
                   >
                     {startup.stage.replace('-', ' ')}
@@ -126,6 +126,24 @@ export default async function StartupPage({ params }: PageProps) {
                     </div>
                   )}
                 </div>
+
+                {/* Row 1.5: Sectors */}
+                {startup.sectors && startup.sectors.length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    {startup.sectors.map((sector: string) => (
+                      <Badge 
+                        key={sector}
+                        className="text-xs rounded-[4px] text-gray-800"
+                        style={{ 
+                          backgroundColor: '#F5F5DC',
+                          border: '1px solid #E5E5D0'
+                        }}
+                      >
+                        {sector}
+                      </Badge>
+                    ))}
+                  </div>
+                )}
 
                 {/* Row 2: Social Media Links */}
                 <div className="flex flex-wrap gap-3">

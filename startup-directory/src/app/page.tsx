@@ -49,7 +49,7 @@ export default async function HomePage() {
       <Suspense fallback={null}>
         <EmailVerificationHandler />
       </Suspense>
-      <header>
+      <header className="pt-2">
           <div className="container mx-auto px-4 py-6">
             <div className="flex items-center justify-between">
               <Logo />

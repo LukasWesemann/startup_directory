@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { ExternalLink } from "lucide-react"
 import Link from "next/link"
+import { cardStyle } from "@/lib/utils"
 
 async function getStartupProfile() {
   const supabase = await createClient()
@@ -47,13 +48,7 @@ export default async function ProfilePage() {
 
       {/* Public Profile Link */}
       <div className="max-w-4xl mx-auto">
-        <Card 
-          style={{
-            backgroundColor: 'transparent',
-            boxShadow: '0 10px 25px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2)',
-            border: '1px solid #404040'
-          }}
-        >
+        <Card style={cardStyle}>
           <CardContent className="flex items-center justify-between p-6">
             <div>
               <h3 className="font-medium text-foreground">Public Profile</h3>

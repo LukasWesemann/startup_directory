@@ -4,7 +4,8 @@ import { Startup, Update } from "@/lib/types/database"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { formatDateShort } from "@/lib/utils"
+import { formatDateShort, cardStyle } from "@/lib/utils"
+import { Pen, Compass } from "lucide-react"
 
 async function getDashboardData() {
   const supabase = await createClient()
@@ -58,96 +59,131 @@ export default async function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <Card 
-          style={{
-            backgroundColor: 'transparent',
-            boxShadow: '0 10px 25px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2)',
-            border: '1px solid #404040'
-          }}
-        >
+        <Card style={cardStyle} className="flex flex-col">
           <CardHeader>
             <CardTitle>Profile Status</CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              <p className="text-sm text-muted-foreground">
-                Slug: <span className="font-medium">{startup.slug}</span>
-              </p>
-              <p className="text-sm text-muted-foreground">
-                Stage: <span className="font-medium">{startup.stage.replace('-', ' ')}</span>
-              </p>
-              <p className="text-sm text-muted-foreground">
-                Visibility: <span className="font-medium">{startup.is_public ? 'Public' : 'Private'}</span>
-              </p>
+          <CardContent className="flex-1 flex flex-col">
+            <div className="space-y-3 flex-1">
+              {(() => {
+                const fields = [
+                  { name: 'Logo', filled: !!startup.logo_url },
+                  { name: 'Tagline', filled: !!startup.tagline },
+                  { name: 'Description', filled: !!startup.description_md },
+                  { name: 'Website', filled: !!startup.website_url },
+                  { name: 'Location', filled: !!startup.location },
+                  { name: 'Sectors', filled: startup.sectors && startup.sectors.length > 0 },
+                  { name: 'Email', filled: !!startup.email },
+                  { name: 'Twitter', filled: !!startup.twitter_url },
+                  { name: 'LinkedIn', filled: !!startup.linkedin_url }
+                ]
+                const filledCount = fields.filter(field => field.filled).length
+                const completionPercentage = Math.round((filledCount / fields.length) * 100)
+                
+                return (
+                  <>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-muted-foreground">Profile Completion</span>
+                      <span className="text-sm font-medium text-foreground">{completionPercentage}%</span>
+                    </div>
+                    <div className="w-full bg-muted rounded-full h-2">
+                      <div 
+                        className="h-2 rounded-full transition-all duration-300"
+                        style={{ 
+                          width: `${completionPercentage}%`,
+                          backgroundColor: completionPercentage >= 80 ? '#0F8A8A' : completionPercentage >= 50 ? '#f59e0b' : '#ef4444'
+                        }}
+                      />
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      {filledCount} of {fields.length} fields completed
+                      {!startup.logo_url && <span className="block mt-1">• Missing logo</span>}
+                      {!startup.tagline && <span className="block">• Missing tagline</span>}
+                      {(!startup.sectors || startup.sectors.length === 0) && <span className="block">• Missing sectors</span>}
+                    </div>
+                  </>
+                )
+              })()}
+            </div>
+            <div className="flex gap-2 mt-4">
               <Link href="/dashboard/profile">
-                <Button variant="outline" size="sm" className="mt-3">
+                <Button 
+                  variant="outline"
+                  size="sm" 
+                  className="text-foreground hover:bg-muted transition-colors cursor-pointer"
+                >
+                  <Pen className="w-3 h-3 mr-1" />
                   Edit Profile
+                </Button>
+              </Link>
+              <Link href={`/s/${startup.slug}`} target="_blank">
+                <Button 
+                  size="sm" 
+                  className="text-white hover:bg-teal-700 hover:border-teal-700 transition-colors cursor-pointer"
+                  style={{
+                    backgroundColor: '#0F8A8A',
+                    borderColor: '#0F8A8A',
+                  }}
+                >
+                  View Public Profile
                 </Button>
               </Link>
             </div>
           </CardContent>
         </Card>
 
-        <Card 
-          style={{
-            backgroundColor: 'transparent',
-            boxShadow: '0 10px 25px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2)',
-            border: '1px solid #404040'
-          }}
-        >
+        <Card style={cardStyle} className="flex flex-col">
           <CardHeader>
             <CardTitle>Updates</CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
+          <CardContent className="flex-1 flex flex-col">
+            <div className="space-y-2 flex-1">
               <p className="text-2xl font-bold text-foreground">
                 {updates.length}
               </p>
               <p className="text-sm text-muted-foreground">
                 Total updates published
               </p>
-              <Link href="/dashboard/updates">
-                <Button variant="outline" size="sm" className="mt-3">
-                  Manage Updates
-                </Button>
-              </Link>
             </div>
+            <Link href="/dashboard/updates" className="mt-4">
+              <Button 
+                size="sm" 
+                className="text-white hover:bg-teal-700 hover:border-teal-700 transition-colors cursor-pointer"
+                style={{
+                  backgroundColor: '#0F8A8A',
+                  borderColor: '#0F8A8A',
+                }}
+              >
+                Manage Updates
+              </Button>
+            </Link>
           </CardContent>
         </Card>
 
-        <Card 
-          style={{
-            backgroundColor: 'transparent',
-            boxShadow: '0 10px 25px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2)',
-            border: '1px solid #404040'
-          }}
-        >
+        <Card style={cardStyle} className="flex flex-col">
           <CardHeader>
-            <CardTitle>Public Profile</CardTitle>
+            <CardTitle>Discover similar startups</CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              <p className="text-sm text-muted-foreground">
-                View your public profile page
-              </p>
-              <Link href={`/s/${startup.slug}`} target="_blank">
-                <Button variant="outline" size="sm" className="mt-3">
-                  View Profile
-                </Button>
-              </Link>
+          <CardContent className="flex-1 flex flex-col">
+            <div className="flex-1 flex items-center justify-center">
+              <div className="text-center">
+                <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center mx-auto mb-3">
+                  <Compass className="w-6 h-6 text-muted-foreground" />
+                </div>
+                <p className="text-sm font-medium text-foreground mb-1">
+                  Coming Soon
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  Find startups in similar sectors and stages
+                </p>
+              </div>
             </div>
           </CardContent>
         </Card>
       </div>
 
       {updates.length > 0 && (
-        <Card 
-          style={{
-            backgroundColor: 'transparent',
-            boxShadow: '0 10px 25px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2)',
-            border: '1px solid #404040'
-          }}
-        >
+        <Card style={cardStyle}>
           <CardHeader>
             <CardTitle>Recent Updates</CardTitle>
           </CardHeader>

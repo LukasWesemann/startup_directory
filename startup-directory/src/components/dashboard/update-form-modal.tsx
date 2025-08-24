@@ -152,10 +152,24 @@ export function UpdateFormModal({ children, update, updateId }: UpdateFormModalP
 
 
           <div className="flex justify-end space-x-2">
-            <Button type="button" variant="outline" onClick={() => setOpen(false)} disabled={loading}>
+            <Button 
+              type="button" 
+              variant="outline" 
+              onClick={() => setOpen(false)} 
+              disabled={loading}
+              className="hover:bg-muted transition-colors duration-200 cursor-pointer"
+            >
               Cancel
             </Button>
-            <Button type="submit" disabled={loading}>
+            <Button 
+              type="submit" 
+              disabled={loading}
+              className="text-white hover:bg-teal-700 hover:border-teal-700 transition-all duration-200 cursor-pointer shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              style={{
+                backgroundColor: loading ? undefined : '#0F8A8A',
+                borderColor: loading ? undefined : '#0F8A8A',
+              }}
+            >
               {loading ? "Saving..." : (update || updateId ? "Update" : "Create")}
             </Button>
           </div>

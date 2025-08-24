@@ -17,6 +17,9 @@ CREATE TABLE public.startups (
   sectors TEXT[],
   stage stage_enum DEFAULT 'idea'::stage_enum,
   is_public BOOLEAN NOT NULL DEFAULT true,
+  email TEXT,
+  twitter_url TEXT,
+  linkedin_url TEXT,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
@@ -94,6 +97,38 @@ CREATE TRIGGER on_auth_user_created
 -- Enable RLS
 ALTER TABLE public.startups ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.updates ENABLE ROW LEVEL SECURITY;
+
+-- Create storage bucket for startup logos
+INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+VALUES (
+  'startup-logos',
+  'startup-logos',
+  true,
+  5242880, -- 5MB limit
+  ARRAY['image/jpeg', 'image/png', 'image/gif', 'image/webp']
+);
+
+-- Create RLS policies for the storage bucket
+CREATE POLICY "Public Access" ON storage.objects
+  FOR SELECT USING (bucket_id = 'startup-logos');
+
+CREATE POLICY "Authenticated users can upload logos" ON storage.objects
+  FOR INSERT WITH CHECK (
+    bucket_id = 'startup-logos' 
+    AND auth.role() = 'authenticated'
+  );
+
+CREATE POLICY "Users can update their own logos" ON storage.objects
+  FOR UPDATE USING (
+    bucket_id = 'startup-logos' 
+    AND auth.role() = 'authenticated'
+  );
+
+CREATE POLICY "Users can delete their own logos" ON storage.objects
+  FOR DELETE USING (
+    bucket_id = 'startup-logos' 
+    AND auth.role() = 'authenticated'
+  );
 
 -- Public can read public startups and published updates
 CREATE POLICY "read_public_startups" ON public.startups

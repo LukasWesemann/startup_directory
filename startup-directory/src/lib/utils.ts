@@ -26,3 +26,10 @@ export function formatDateShort(date: string | Date): string {
     day: 'numeric'
   })
 }
+
+// Shared card styling to reduce duplication
+export const cardStyle = {
+  backgroundColor: 'transparent',
+  boxShadow: '0 10px 25px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2)',
+  border: '1px solid #404040'
+}

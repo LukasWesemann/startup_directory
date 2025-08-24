@@ -1,36 +1,120 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Australian Startup Directory
 
-## Getting Started
+A modern startup directory built with Next.js 14, Supabase, and TypeScript. Allows startups to create profiles, share updates, and connect with the community.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Authentication**: Sign up/sign in with email verification
+- **Startup Profiles**: Create and manage startup profiles with logos, descriptions, and social links
+- **Updates Feed**: Share progress updates with markdown support and images
+- **Public Profiles**: Dedicated pages for each startup with their updates
+- **Responsive Design**: Works seamlessly on mobile and desktop
+- **Dark Mode**: Modern dark theme optimized for readability
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 14 (App Router)
+- **Database**: Supabase (PostgreSQL)
+- **Authentication**: Supabase Auth
+- **Storage**: Supabase Storage (for images)
+- **Styling**: Tailwind CSS + shadcn/ui
+- **Language**: TypeScript
+- **Validation**: Zod
+
+## 📦 Getting Started
+
+### Prerequisites
+- Node.js 18.17+ 
+- A Supabase project
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <repo-url>
+   cd startup-directory
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   Create a `.env.local` file:
+   ```env
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+   ```
+
+4. **Set up database**
+   Run the SQL migration in your Supabase SQL editor:
+   ```bash
+   # Copy contents of supabase-migration.sql to Supabase SQL Editor
+   ```
+
+5. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+
+6. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+## 📁 Project Structure
+
+```
+startup-directory/
+├── src/
+│   ├── app/                    # Next.js App Router pages
+│   │   ├── auth/              # Authentication pages
+│   │   ├── dashboard/         # Protected dashboard pages
+│   │   ├── s/[slug]/         # Public startup profiles
+│   │   └── page.tsx          # Homepage
+│   ├── components/            # React components
+│   │   ├── auth/             # Authentication components
+│   │   ├── dashboard/        # Dashboard components
+│   │   └── ui/               # Reusable UI components
+│   ├── lib/                  # Utilities and configurations
+│   │   ├── hooks/            # Custom React hooks
+│   │   ├── supabase/         # Supabase client configuration
+│   │   ├── types/            # TypeScript type definitions
+│   │   ├── utils/            # Utility functions
+│   │   └── validations/      # Zod schemas
+│   └── middleware.ts         # Next.js middleware
+├── public/                   # Static assets
+├── supabase-migration.sql    # Database schema
+└── package.json
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🔧 Key Features Implemented
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- ✅ **Clean Architecture**: Modular component structure with shared utilities
+- ✅ **Type Safety**: Full TypeScript coverage with Zod validation
+- ✅ **Authentication Flow**: Complete signup/signin with email verification
+- ✅ **Error Handling**: Global error boundary and specific error messages
+- ✅ **Performance**: Optimized auth hooks and selective component rendering
+- ✅ **Security**: Removed unsafe admin client, proper RLS policies
+- ✅ **Code Quality**: Shared styling utilities, consolidated navigation logic
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛡️ Security Features
 
-## Learn More
+- Row Level Security (RLS) policies
+- Secure authentication with Supabase
+- Protected dashboard routes
+- Input validation with Zod schemas
+- Safe file upload handling
 
-To learn more about Next.js, take a look at the following resources:
+## 📚 Learn More
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Supabase Documentation](https://supabase.com/docs)
+- [Tailwind CSS](https://tailwindcss.com/docs)
+- [shadcn/ui](https://ui.shadcn.com/)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🚢 Deployment
 
-## Deploy on Vercel
+The app is ready for deployment on Vercel, Netlify, or any platform supporting Next.js.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+For detailed setup instructions, see [SETUP.md](./SETUP.md).

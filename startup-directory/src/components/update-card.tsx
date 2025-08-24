@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
-import { formatDateShort } from "@/lib/utils"
+import { formatDateShort, cardStyle } from "@/lib/utils"
 
 interface UpdateCardProps {
   update: UpdateWithStartup
@@ -24,11 +24,7 @@ export function UpdateCard({ update, onClick }: UpdateCardProps) {
   return (
     <Card 
       className="cursor-pointer transition-all duration-300 ease-in-out flex flex-col h-full hover:scale-102 hover:shadow-2xl shadow-lg"
-      style={{
-        backgroundColor: 'transparent',
-        boxShadow: '0 10px 25px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2)',
-        border: '1px solid #404040'
-      }}
+      style={cardStyle}
       onClick={onClick}
     >
       <CardHeader className="pb-3">
@@ -59,17 +55,20 @@ export function UpdateCard({ update, onClick }: UpdateCardProps) {
           >
             {startup.stage.replace('-', ' ')}
           </Badge>
-          {startup.sectors && startup.sectors.length > 0 && (
-            <Badge 
-              className="text-xs rounded-[4px] text-gray-800"
-              style={{ 
-                backgroundColor: '#F5F5DC',
-                border: '1px solid #E5E5D0'
-              }}
-            >
-              {startup.sectors[0]}
-            </Badge>
-          )}
+          {startup.sectors && startup.sectors.length > 0 && 
+            startup.sectors.map((sector: string) => (
+              <Badge 
+                key={sector}
+                className="text-xs rounded-[4px] text-gray-800"
+                style={{ 
+                  backgroundColor: '#F5F5DC',
+                  border: '1px solid #E5E5D0'
+                }}
+              >
+                {sector}
+              </Badge>
+            ))
+          }
         </div>
         {update.title && (
           <h4 className="font-medium text-foreground mt-3">{update.title}</h4>

@@ -1,14 +1,20 @@
 "use client"
 
 import { useEffect } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter, useSearchParams, usePathname } from "next/navigation"
 import { createClient } from "@/lib/supabase/client"
 
 export function EmailVerificationHandler() {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const pathname = usePathname()
 
   useEffect(() => {
+    // Only run on homepage and auth pages to improve performance
+    if (!pathname || (!pathname.startsWith('/auth') && pathname !== '/')) {
+      return
+    }
+
     const handleEmailVerification = async () => {
       const supabase = createClient()
       
@@ -68,7 +74,7 @@ export function EmailVerificationHandler() {
     }
 
     handleEmailVerification()
-  }, [searchParams, router])
+  }, [searchParams, router, pathname])
 
   return null
 } 
